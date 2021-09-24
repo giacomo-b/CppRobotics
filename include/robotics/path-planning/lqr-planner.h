@@ -21,7 +21,7 @@ namespace Robotics {
              * @brief Creates a new robotics
              * @param name the name to greet
              */
-            LQRPlanner(std::string name) : name(std::move(_name)) {}
+            LQRPlanner(std::string name) : name(std::move(name)) {}
 
             /**
              * @brief Creates a localized string containing the greeting
