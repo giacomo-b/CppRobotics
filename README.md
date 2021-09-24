@@ -33,6 +33,7 @@ This is a work in progress, and any help or suggestion would be greatly apprecia
    * [Requirements](#requirements)
    * [Documentation](#documentation)
    * [How to use](#how-to-use)
+   * [TODOs](#todos)
 
 ## What is this?
 
@@ -170,3 +171,58 @@ Additional arguments can be passed to the analyzers by setting the `CLANG_TIDY_A
 #### Ccache
 
 Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
+
+## TODOs
+
+- [ ] Localization  
+  - [ ] Extended Kalman Filter localization  
+  - [ ] Particle filter localization  
+  - [ ] Histogram filter localization  
+- [ ] Mapping  
+  - [ ] Gaussian grid map  
+  - [ ] Ray casting grid map  
+  - [ ] Lidar to grid map
+  - [ ] k-means object clustering  
+  - [ ] Rectangle fitting  
+- [ ] SLAM  
+  - [ ] Iterative Closest Point (ICP) Matching  
+  - [ ] FastSLAM 1.0
+
+
+- [ ] Path Planning  
+  - [ ] Dynamic Window Approach  
+  - [ ] Grid based search  
+    - [ ] Dijkstra algorithm  
+    - [ ] A\* algorithm  
+    - [ ] D\* algorithm  
+    - [ ] D\* Lite algorithm  
+    - [ ] Potential Field algorithm  
+    - [ ] Grid based coverage path planning  
+  - [ ] State Lattice Planning  
+    - [ ] Biased polar sampling  
+    - [ ] Lane sampling  
+  - [ ] Probabilistic Road-Map (PRM) planning   
+  - [ ] Rapidly-Exploring Random Trees (RRT)  
+    - [ ] RRT\*  
+    - [ ] RRT\* with reeds-shepp path  
+    - [ ] LQR-RRT\*  
+  - [ ] Quintic polynomials planning  
+  - [ ] Reeds Shepp planning  
+  - [ ] LQR based path planning  
+  - [ ] Optimal Trajectory in a Frenet Frame  
+- [ ] Path Tracking  
+  - [ ] move to a pose control  
+  - [ ] Stanley control  
+  - [ ] Rear wheel feedback control  
+  - [ ] Linear–quadratic regulator (LQR) speed and steering control  
+  - [ ] Model predictive speed and steering control  
+  - [ ] Nonlinear Model predictive control with C-GMRES  
+- [ ] Arm Navigation  
+  - [ ] N joint arm to point control  
+  - [ ] Arm navigation with obstacle avoidance  
+- [ ] Aerial Navigation  
+  - [ ] Drone 3D trajectory following  
+  - [ ] Rocket powered landing  
+- [ ] Bipedal  
+  - [ ] bipedal planner with inverted pendulum  
+
