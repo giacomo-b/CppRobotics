@@ -1,54 +1,42 @@
 #include <robotics/robotics.h>
-#include <robotics/version.h>
 
-#include <cxxopts.hpp>
+#include <Eigen/Dense>
 #include <iostream>
-#include <string>
-#include <unordered_map>
+#include <random>
 
-auto main(int argc, char** argv) -> int
+using Robotics::Coordinates;
+
+int main()
 {
-    const std::unordered_map<std::string, Robotics::PathPlanning::LanguageCode> languages{
-        {"en", Robotics::PathPlanning::LanguageCode::EN},
-        {"de", Robotics::PathPlanning::LanguageCode::DE},
-        {"es", Robotics::PathPlanning::LanguageCode::ES},
-        {"fr", Robotics::PathPlanning::LanguageCode::FR},
-    };
+    const int n_test = 10;
+    const double area = 100.0;
 
-    cxxopts::Options options(*argv, "A program to welcome the world!");
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(-area, area);
 
-    std::string language;
-    std::string name;
+    double dt = 0.1;
 
-    // clang-format off
-  options.add_options()
-    ("h,help", "Show help")
-    ("v,version", "Print the current version number")
-    ("n,name", "Name to greet", cxxopts::value(name)->default_value("World"))
-    ("l,lang", "Language code to use", cxxopts::value(language)->default_value("en"))
-  ;
-    // clang-format on
+    Eigen::MatrixXd A(2, 2);
+    A << dt, 1.0, 0, dt;
 
-    auto result = options.parse(argc, argv);
+    Eigen::VectorXd B(2);
+    B << 0, 1;
 
-    if (result["help"].as<bool>()) {
-        std::cout << options.help() << std::endl;
-        return 0;
+    Eigen::MatrixXd Q = Eigen::MatrixXd::Identity(2, 2);
+    Eigen::MatrixXd R = Eigen::MatrixXd::Identity(1, 1);
+
+    Robotics::PathPlanning::LQR lqr_planner(A, B, Q, R);
+    lqr_planner.setTimeStep(dt);
+
+    for (auto _ = n_test; _--;) {
+        Coordinates initial{.x = 6.0, .y = 6.0};
+        Coordinates target{.x = distribution(generator), .y = distribution(generator)};
+
+        std::vector<Coordinates> path = lqr_planner.Solve(initial, target);
+
+        std::cout << "Goal: " << target.x << '\t' << target.y << '\n';
+        std::cout << path << std::endl;
     }
-
-    if (result["version"].as<bool>()) {
-        std::cout << "Robotics, version " << ROBOTICS_VERSION << std::endl;
-        return 0;
-    }
-
-    auto langIt = languages.find(language);
-    if (langIt == languages.end()) {
-        std::cerr << "unknown language code: " << language << std::endl;
-        return 1;
-    }
-
-    Robotics::PathPlanning::LQRPlanner planner(name);
-    std::cout << planner.greet(langIt->second) << std::endl;
 
     return 0;
 }

@@ -1,3 +1,3 @@
 #pragma once
 
-#include <robotics/path-planning/lqr-planner.h>
+#include <robotics/path-planning/lqr.h>
