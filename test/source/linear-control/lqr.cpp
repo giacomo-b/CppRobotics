@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <robotics/path-planning/lqr.h>
+#include <robotics/linear-control/lqr.h>
 #include <Eigen/Dense>
 #include <string>
 
