@@ -12,6 +12,7 @@
 <img src="https://github.com/AtsushiSakai/PythonRobotics/raw/master/icon.png?raw=true" align="right" width="300" alt="header pic"/>
 
 # CppRobotics
+
 <!-- ![GitHub_Action_Linux_CI](https://github.com/AtsushiSakai/PythonRobotics/workflows/Linux_CI/badge.svg)
 ![GitHub_Action_MacOS_CI](https://github.com/AtsushiSakai/PythonRobotics/workflows/MacOS_CI/badge.svg)
 [![Build Status](https://travis-ci.org/AtsushiSakai/PythonRobotics.svg?branch=master)](https://travis-ci.org/AtsushiSakai/PythonRobotics)
@@ -29,11 +30,12 @@ Add a star if you like the repo, and make sure to add one to the original Python
 This is a work in progress, and any help or suggestion would be greatly appreciated!
 
 ## Table of Contents
-   * [What is this?](#what-is-this)
-   * [Requirements](#requirements)
-   * [Documentation](#documentation)
-   * [How to use](#how-to-use)
-   * [TODOs](#todos)
+
+* [What is this?](#what-is-this)
+* [Requirements](#requirements)
+* [Documentation](#documentation)
+* [How to use](#how-to-use)
+* [TODOs](#todos)
 
 ## What is this?
 
@@ -54,11 +56,11 @@ See this paper for more details on the original Python repo:
 
 ## Requirements
 
-- A C++11 compiler
+* A C++11 compiler
 
-- CMake
+* CMake
 
-- The dependencies will be obtained automatically by [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
+* The dependencies will be obtained automatically by [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
 
 ## Documentation
 
