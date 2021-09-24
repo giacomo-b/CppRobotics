@@ -85,7 +85,7 @@ Use the following command to build and run the executable target.
 ```bash
 cmake -S standalone -B build/standalone
 cmake --build build/standalone
-./build/standalone/Greeter --help
+./build/standalone/Robotics --help
 ```
 
 ### Build and run test suite
@@ -148,7 +148,7 @@ cmake --build build
 # format code
 cmake --build build --target fix-format
 # run standalone
-./build/standalone/Greeter --help
+./build/standalone/Robotics --help
 # build docs
 cmake --build build --target GenerateDocs
 ```

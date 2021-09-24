@@ -1,5 +1,5 @@
-#include <greeter/greeter.h>
-#include <greeter/version.h>
+#include <robotics/robotics.h>
+#include <robotics/version.h>
 
 #include <cxxopts.hpp>
 #include <iostream>
@@ -7,11 +7,11 @@
 #include <unordered_map>
 
 auto main(int argc, char** argv) -> int {
-  const std::unordered_map<std::string, greeter::LanguageCode> languages{
-      {"en", greeter::LanguageCode::EN},
-      {"de", greeter::LanguageCode::DE},
-      {"es", greeter::LanguageCode::ES},
-      {"fr", greeter::LanguageCode::FR},
+  const std::unordered_map<std::string, robotics::LanguageCode> languages{
+      {"en", robotics::LanguageCode::EN},
+      {"de", robotics::LanguageCode::DE},
+      {"es", robotics::LanguageCode::ES},
+      {"fr", robotics::LanguageCode::FR},
   };
 
   cxxopts::Options options(*argv, "A program to welcome the world!");
@@ -36,7 +36,7 @@ auto main(int argc, char** argv) -> int {
   }
 
   if (result["version"].as<bool>()) {
-    std::cout << "Greeter, version " << GREETER_VERSION << std::endl;
+    std::cout << "Robotics, version " << GREETER_VERSION << std::endl;
     return 0;
   }
 
@@ -46,8 +46,8 @@ auto main(int argc, char** argv) -> int {
     return 1;
   }
 
-  greeter::Greeter greeter(name);
-  std::cout << greeter.greet(langIt->second) << std::endl;
+  robotics::Robotics robotics(name);
+  std::cout << robotics.greet(langIt->second) << std::endl;
 
   return 0;
 }

@@ -1,11 +1,11 @@
 #include <fmt/format.h>
-#include <greeter/greeter.h>
+#include <robotics/robotics.h>
 
-using namespace greeter;
+using namespace robotics;
 
-Greeter::Greeter(std::string _name) : name(std::move(_name)) {}
+Robotics::Robotics(std::string _name) : name(std::move(_name)) {}
 
-std::string Greeter::greet(LanguageCode lang) const {
+std::string Robotics::greet(LanguageCode lang) const {
   switch (lang) {
     default:
     case LanguageCode::EN:
