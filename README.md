@@ -98,7 +98,7 @@ cmake --build build/test
 CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
 
 # or simply call the executable: 
-./build/test/GreeterTests
+./build/test/RoboticsTests
 ```
 
 To collect code coverage information, run CMake with the `-DENABLE_TEST_COVERAGE=1` option.
@@ -144,7 +144,7 @@ cmake -S all -B build
 cmake --build build
 
 # run tests
-./build/test/GreeterTests
+./build/test/RoboticsTests
 # format code
 cmake --build build --target fix-format
 # run standalone

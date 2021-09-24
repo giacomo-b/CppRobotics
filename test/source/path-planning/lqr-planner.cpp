@@ -5,12 +5,12 @@
 
 TEST_CASE("Robotics")
 {
-    using namespace robotics;
+    using namespace Robotics::PathPlanning;
 
-    Robotics robotics("Tests");
+    LQRPlanner planner("Tests");
 
-    CHECK(robotics.greet(LanguageCode::EN) == "Hello, Tests!");
-    CHECK(robotics.greet(LanguageCode::DE) == "Hallo Tests!");
-    CHECK(robotics.greet(LanguageCode::ES) == "¡Hola Tests!");
-    CHECK(robotics.greet(LanguageCode::FR) == "Bonjour Tests!");
+    CHECK(planner.greet(LanguageCode::EN) == "Hello, Tests!");
+    CHECK(planner.greet(LanguageCode::DE) == "Hallo Tests!");
+    CHECK(planner.greet(LanguageCode::ES) == "¡Hola Tests!");
+    CHECK(planner.greet(LanguageCode::FR) == "Bonjour Tests!");
 }

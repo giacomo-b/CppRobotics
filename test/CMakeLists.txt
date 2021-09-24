@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
-project(GreeterTests LANGUAGES CXX)
+project(RoboticsTests LANGUAGES CXX)
 
 # ---- Options ----
 
@@ -26,30 +26,31 @@ endif()
 
 # ---- Create binary ----
 
-file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
-add_executable(GreeterTests ${sources})
-target_link_libraries(GreeterTests doctest::doctest Robotics::Robotics)
-set_target_properties(GreeterTests PROPERTIES CXX_STANDARD 17)
+file(GLOB_RECURSE sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
+add_executable(RoboticsTests ${sources})
+target_link_libraries(RoboticsTests doctest::doctest Robotics::Robotics)
+set_target_properties(RoboticsTests PROPERTIES CXX_STANDARD 17)
 
 # enable compiler warnings
 if(NOT TEST_INSTALLED_VERSION)
   if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    target_compile_options(Robotics PUBLIC -Wall -Wpedantic -Wextra -Werror)
+    target_compile_options(Robotics INTERFACE -Wall -Wpedantic -Wextra -Werror)
   elseif(MSVC)
-    target_compile_options(Robotics PUBLIC /W4 /WX)
-    target_compile_definitions(GreeterTests PUBLIC DOCTEST_CONFIG_USE_STD_HEADERS)
+    target_compile_options(Robotics INTERFACE /W4 /WX)
+    target_compile_definitions(RoboticsTests INTERFACE DOCTEST_CONFIG_USE_STD_HEADERS)
   endif()
 endif()
 
-# ---- Add GreeterTests ----
+# ---- Add RoboticsTests ----
 
 enable_testing()
 
 # Note: doctest and similar testing frameworks can automatically configure CMake tests. For other
-# testing frameworks add the tests target instead: add_test(NAME greeterTests COMMAND GreeterTests)
+# testing frameworks add the tests target instead: add_test(NAME roboticsTests COMMAND
+# RoboticsTests)
 
 include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
-doctest_discover_tests(GreeterTests)
+doctest_discover_tests(RoboticsTests)
 
 # ---- code coverage ----
 

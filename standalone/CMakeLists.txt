@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
-project(GreeterStandalone LANGUAGES CXX)
+project(RoboticsStandalone LANGUAGES CXX)
 
 # --- Import tools ----
 
@@ -22,8 +22,8 @@ CPMAddPackage(NAME Robotics SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 
-add_executable(GreeterStandalone ${sources})
+add_executable(RoboticsStandalone ${sources})
 
-set_target_properties(GreeterStandalone PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "Robotics")
+set_target_properties(RoboticsStandalone PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "Robotics")
 
-target_link_libraries(GreeterStandalone Robotics::Robotics cxxopts)
+target_link_libraries(RoboticsStandalone Robotics::Robotics cxxopts)
