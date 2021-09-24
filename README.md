@@ -54,13 +54,11 @@ See this paper for more details on the original Python repo:
 
 ## Requirements
 
-For running each sample code:
+- A C++11 compiler
 
-- C++11
+- CMake
 
-- CMake and a compiler
-
-- The dependencies will be obtained automatically thanks to [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
+- The dependencies will be obtained automatically by [CPM.cmake](https://github.com/TheLartians/CPM.cmake)
 
 ## Documentation
 

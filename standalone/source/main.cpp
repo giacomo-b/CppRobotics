@@ -1,7 +1,6 @@
 #include <robotics/robotics.h>
 #include <robotics/version.h>
 
-#include <cxxopts.hpp>
 #include <iostream>
 #include <string>
 #include <unordered_map>
