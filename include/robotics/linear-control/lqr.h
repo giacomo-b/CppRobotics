@@ -14,7 +14,7 @@ Author (C++): Giacomo Bonaccorsi (giacomo-b)
 #include <string>
 #include <vector>
 
-namespace Robotics::PathPlanning {
+namespace Robotics::LinearControl {
 
     /**
      * @brief A class for path planning using a Linear Quadratric Regulator
@@ -135,4 +135,4 @@ namespace Robotics::PathPlanning {
         return Xn;
     }
 
-}  // namespace Robotics::PathPlanning
+}  // namespace Robotics::LinearControl

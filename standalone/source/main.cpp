@@ -24,7 +24,7 @@ int main()
     Eigen::MatrixXd Q = Eigen::MatrixXd::Identity(2, 2);
     Eigen::MatrixXd R = Eigen::MatrixXd::Identity(1, 1);
 
-    Robotics::PathPlanning::LQR lqr_planner(A, B, Q, R);
+    Robotics::LinearControl::LQR lqr_planner(A, B, Q, R);
     lqr_planner.setTimeStep(dt);
 
     const int n_test = 10;
