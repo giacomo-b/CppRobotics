@@ -33,12 +33,12 @@ int main()
     std::default_random_engine generator;
     std::uniform_real_distribution<double> distribution(-area, area);
 
-    Coordinates start{.x = 6.0, .y = 6.0};
+    Coordinates start = {6.0, 6.0};
     matplot::plot({start.x}, {start.y}, "o")->line_width(3).color("green");
     matplot::hold(matplot::on);
 
     for (auto _ = n_test; _--;) {
-        Coordinates target{.x = distribution(generator), .y = distribution(generator)};
+        Coordinates target = {distribution(generator), distribution(generator)};
 
         std::cout << "Goal: (" << target.x << ", " << target.y << "), ";
         auto t_start = std::chrono::high_resolution_clock::now();

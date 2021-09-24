@@ -79,7 +79,7 @@ namespace Robotics::LinearControl {
     std::vector<Coordinates> LQR::Solve(Coordinates init, Coordinates target)
     {
         std::vector<Coordinates> path{init};
-        path.reserve(std::round(max_time / dt) + 1);  // TODO: currently assuming the worst case
+        path.reserve((unsigned int)std::round(max_time / dt) + 1);  // TODO: currently assuming the worst case
 
         Eigen::VectorXd state(2);
         state << (init.x - target.x), (init.y - target.y);
@@ -94,7 +94,10 @@ namespace Robotics::LinearControl {
             u = ControlAction(state);
 
             state = A * state + B * u;
-            path.push_back({.x = state(0) + target.x, .y = state(1) + target.y});
+
+            // TODO: assumes the system is 2D, path should be something like vector<vector>
+            Coordinates current = {state(0) + target.x, state(1) + target.y};
+            path.push_back(current);
 
             double d = std::sqrt(std::pow((target.x - path.back().x), 2)
                                  + std::pow((target.y - path.back().y), 2));
