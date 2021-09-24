@@ -3,13 +3,14 @@
 
 #include <string>
 
-TEST_CASE("Robotics") {
-  using namespace robotics;
+TEST_CASE("Robotics")
+{
+    using namespace robotics;
 
-  Robotics robotics("Tests");
+    Robotics robotics("Tests");
 
-  CHECK(robotics.greet(LanguageCode::EN) == "Hello, Tests!");
-  CHECK(robotics.greet(LanguageCode::DE) == "Hallo Tests!");
-  CHECK(robotics.greet(LanguageCode::ES) == "¡Hola Tests!");
-  CHECK(robotics.greet(LanguageCode::FR) == "Bonjour Tests!");
+    CHECK(robotics.greet(LanguageCode::EN) == "Hello, Tests!");
+    CHECK(robotics.greet(LanguageCode::DE) == "Hallo Tests!");
+    CHECK(robotics.greet(LanguageCode::ES) == "¡Hola Tests!");
+    CHECK(robotics.greet(LanguageCode::FR) == "Bonjour Tests!");
 }

@@ -1,35 +1,51 @@
 #pragma once
 
+#include <fmt/format.h>
+
 #include <string>
 
-namespace robotics {
+namespace Robotics {
+    namespace PathPlanning {
 
-  /**  Language codes to be used with the Robotics class */
-  enum class LanguageCode { EN, DE, ES, FR };
+        /**  Language codes to be used with the Robotics class */
+        enum class LanguageCode { EN, DE, ES, FR };
 
-  /**
-   * @brief A class for saying hello in multiple languages
-   */
-  class LQRPlanner {
-    std::string name;
+        /**
+         * @brief A class for saying hello in multiple languages
+         */
+        class LQRPlanner {
+            std::string name;
 
-  public:
-    /**
-     * @brief Creates a new robotics
-     * @param name the name to greet
-     */
-    LQRPlanner(std::string name);
+          public:
+            /**
+             * @brief Creates a new robotics
+             * @param name the name to greet
+             */
+            LQRPlanner(std::string name) : name(std::move(_name)) {}
 
-    /**
-     * @brief Creates a localized string containing the greeting
-     * @param lang the language to greet in
-     * @return a string containing the greeting
-     */
-    std::string greet(LanguageCode lang = LanguageCode::EN) const;
-  };
+            /**
+             * @brief Creates a localized string containing the greeting
+             * @param lang the language to greet in
+             * @return a string containing the greeting
+             */
+            std::string greet(LanguageCode lang = LanguageCode::EN) const
+            {
+                switch (lang) {
+                    default:
+                    case LanguageCode::EN:
+                        return fmt::format("Hello, {}!", name);
+                    case LanguageCode::DE:
+                        return fmt::format("Hallo {}!", name);
+                    case LanguageCode::ES:
+                        return fmt::format("¡Hola {}!", name);
+                    case LanguageCode::FR:
+                        return fmt::format("Bonjour {}!", name);
+                }
+            }
+        };
+    }  // namespace PathPlanning
 
-}  // namespace robotics
-
+}  // namespace Robotics
 
 // """
 
@@ -47,7 +63,6 @@ namespace robotics {
 // import scipy.linalg as la
 
 // SHOW_ANIMATION = True
-
 
 // class LQRPlanner:
 
@@ -149,7 +164,6 @@ namespace robotics {
 //         u = -Kopt @ x
 
 //         return u
-
 
 // def main():
 //     print(__file__ + " start!!")

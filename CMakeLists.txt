@@ -49,7 +49,7 @@ set_target_properties(Robotics PROPERTIES CXX_STANDARD 17)
 target_compile_options(Robotics INTERFACE "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(Robotics PRIVATE fmt::fmt)
+target_link_libraries(Robotics INTERFACE fmt::fmt)
 
 target_include_directories(
   Robotics INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
