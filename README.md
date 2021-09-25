@@ -80,12 +80,12 @@ All animation gifs are stored here: [AtsushiSakai/PythonRoboticsGifs: Animation 
 
 ### Build and run the standalone target
 
-Use the following command to build and run the executable target.
+Use the following commands to build and run the examples:
 
 ```bash
-cmake -S standalone -B build/standalone
-cmake --build build/standalone
-./build/standalone/Robotics --help
+cmake -S examples/infinite_horizon_lqr -B build/infinite_horizon_lqr
+cmake --build build/infinite_horizon_lqr
+./build/infinite_horizon_lqr/main --help
 ```
 
 ### Build and run test suite

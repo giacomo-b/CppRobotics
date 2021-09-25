@@ -9,6 +9,9 @@ project(
   LANGUAGES CXX
 )
 
+# FIXME: doesn't seem to be caching packages
+add_compile_definitions(CPM_SOURCE_CACHE="${CMAKE_CURRENT_LIST_DIR}/build/cache/CPM")
+
 # ---- Include guards ----
 
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)

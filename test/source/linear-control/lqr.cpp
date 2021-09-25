@@ -5,20 +5,24 @@
 
 TEST_CASE("Robotics")
 {
-    using namespace Robotics::LinearControl;
+    static constexpr int N = 2;
+    static constexpr int M = 1;
 
     const double dt = 0.1;
 
-    Eigen::MatrixXd A(2, 2);
+    // State matrix
+    Robotics::SquareMatrix<N> A;
     A << dt, 1.0, 0, dt;
 
-    Eigen::VectorXd B(2);
+    // Control matrix
+    Robotics::Matrix<N,M> B;
     B << 0, 1;
 
-    Eigen::MatrixXd Q = Eigen::MatrixXd::Identity(2, 2);
-    Eigen::MatrixXd R = Eigen::MatrixXd::Identity(1, 1);
+    // Weights
+    Robotics::SquareMatrix<N> Q = Robotics::SquareMatrix<N>::Identity();
+    Robotics::SquareMatrix<M> R = Robotics::SquareMatrix<M>::Identity();
 
-    LQR planner(A, B, Q, R);
+    Robotics::LinearControl::LQR<N,M> planner(A, B, Q, R);
 
     CHECK(true == true);
 }
