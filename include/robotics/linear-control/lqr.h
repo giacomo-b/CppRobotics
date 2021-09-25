@@ -14,17 +14,17 @@ namespace Robotics::LinearControl {
     /**
      * @brief A class for path planning using a Linear Quadratic Regulator
      */
-    template <int N, int M>
-    class LQR {
+    template <int N, int M> class LQR {
         using VectorNx1 = ColumnVector<N>;
         using VectorMx1 = ColumnVector<M>;
 
         using MatrixNxN = SquareMatrix<N>;
         using MatrixMxM = SquareMatrix<M>;
-        using ControlMatrix = Matrix<N,M>;
-        using GainMatrix = Matrix<M,N>;
+        using ControlMatrix = Matrix<N, M>;
+        using GainMatrix = Matrix<M, N>;
 
         using State = VectorNx1;
+
       public:
         /**
          * @brief Creates a new LQR path planner
@@ -34,7 +34,9 @@ namespace Robotics::LinearControl {
          * @param R control weights matrix
          */
         LQR(MatrixNxN A, ControlMatrix B, MatrixNxN Q, MatrixMxM R)
-            : A(A), B(B), Q(Q), R(R), K(ComputeGain()) {}
+            : A(A), B(B), Q(Q), R(R), K(ComputeGain())
+        {
+        }
 
         /**
          * @brief Computes the optimal path to reach the target state
@@ -45,7 +47,8 @@ namespace Robotics::LinearControl {
         std::vector<State> Solve(State initial, State target)
         {
             std::vector<State> path{initial};
-            path.reserve((unsigned int)std::round(max_time / dt) + 1);  // TODO: currently assuming the worst case
+            path.reserve((unsigned int)std::round(max_time / dt)
+                         + 1);  // TODO: currently assuming the worst case
 
             State x = initial - target;
             VectorMx1 u;
@@ -104,8 +107,11 @@ namespace Robotics::LinearControl {
             MatrixNxN X = Q, Xn = Q;
             for (auto _ = 0; _ < max_iter; _++) {
                 std::cout << _ << std::endl;
-                Xn = A.transpose() * X * A - A.transpose() * X * B * (R + B.transpose() * X * B).inverse() * B.transpose() * X * A + Q;
-                if ((Xn - X).lpNorm<Eigen::Infinity>() < eps) break;
+                Xn = A.transpose() * X * A
+                     - A.transpose() * X * B * (R + B.transpose() * X * B).inverse() * B.transpose()
+                           * X * A
+                     + Q;
+                if ((Xn - X).template lpNorm<Eigen::Infinity>() < eps) break;
                 X = Xn;
             }
             return Xn;
@@ -123,5 +129,5 @@ namespace Robotics::LinearControl {
         int max_iter{10};
         double eps{0.01};
     };
-    
+
 }  // namespace Robotics::LinearControl

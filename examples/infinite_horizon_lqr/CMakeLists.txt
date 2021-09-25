@@ -16,12 +16,6 @@ CPMAddPackage(
   OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL YES"
 )
 
-CPMAddPackage(
-    NAME matplotplusplus
-    GITHUB_REPOSITORY alandefreitas/matplotplusplus
-    GIT_TAG origin/master
-)
-
 CPMAddPackage(NAME Robotics SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
 
 # ---- Create standalone executable ----
@@ -32,4 +26,4 @@ add_executable(InfiniteHorizonLQR ${sources})
 
 set_target_properties(InfiniteHorizonLQR PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
 
-target_link_libraries(InfiniteHorizonLQR Robotics::Robotics cxxopts matplot)
+target_link_libraries(InfiniteHorizonLQR Robotics::Robotics cxxopts)

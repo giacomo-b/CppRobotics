@@ -4,7 +4,6 @@
 #include <chrono>
 #include <iostream>
 #include <random>
-#include <iomanip>
 
 int main()
 {
@@ -18,14 +17,14 @@ int main()
     A << dt, 1.0, 0, dt;
 
     // Control matrix
-    Robotics::Matrix<N,M> B;
+    Robotics::Matrix<N, M> B;
     B << 0, 1;
 
     // Weights
     Robotics::SquareMatrix<N> Q = Robotics::SquareMatrix<N>::Identity();
     Robotics::SquareMatrix<M> R = Robotics::SquareMatrix<M>::Identity();
 
-    Robotics::LinearControl::LQR<N,M> lqr_planner(A, B, Q, R);
+    Robotics::LinearControl::LQR<N, M> lqr_planner(A, B, Q, R);
     lqr_planner.setTimeStep(dt);
 
     const int n_test = 10;
@@ -51,8 +50,7 @@ int main()
                       << std::chrono::duration<double, std::milli>(t_end - t_start).count()
                       << " ms.\n";
 
-            for (const auto& point : path)
-                std::cout << std::fixed << std::setprecision(4) << point.transpose() << '\n';
+            std::cout << "Reached: (" << path.back()(0) << ", " << path.back()(1) << ").\n\n";
         }
     }
 
