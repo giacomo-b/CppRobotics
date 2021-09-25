@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - master
-      - main
+      - dev
   pull_request:
     branches:
       - master
-      - main
+      - dev
 
 env:
   CTEST_OUTPUT_ON_FAILURE: 1
