@@ -3,9 +3,9 @@
 
 #include <Eigen/Dense>
 #include <chrono>
+#include <iomanip>
 #include <iostream>
 #include <random>
-#include <iomanip>
 
 int main()
 {
@@ -19,14 +19,14 @@ int main()
     A << dt, 1.0, 0, dt;
 
     // Control matrix
-    Robotics::Matrix<N,M> B;
+    Robotics::Matrix<N, M> B;
     B << 0, 1;
 
     // Weights
     Robotics::SquareMatrix<N> Q = Robotics::SquareMatrix<N>::Identity();
     Robotics::SquareMatrix<M> R = Robotics::SquareMatrix<M>::Identity();
 
-    Robotics::LinearControl::LQR<N,M> lqr_planner(A, B, Q, R);
+    Robotics::LinearControl::LQR<N, M> lqr_planner(A, B, Q, R);
     lqr_planner.setTimeStep(dt);
 
     const int n_test = 10;

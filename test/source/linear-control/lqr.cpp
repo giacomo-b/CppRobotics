@@ -1,5 +1,6 @@
 #include <doctest/doctest.h>
 #include <robotics/linear-control/lqr.h>
+
 #include <Eigen/Dense>
 #include <string>
 
@@ -15,14 +16,14 @@ TEST_CASE("Robotics")
     A << dt, 1.0, 0, dt;
 
     // Control matrix
-    Robotics::Matrix<N,M> B;
+    Robotics::Matrix<N, M> B;
     B << 0, 1;
 
     // Weights
     Robotics::SquareMatrix<N> Q = Robotics::SquareMatrix<N>::Identity();
     Robotics::SquareMatrix<M> R = Robotics::SquareMatrix<M>::Identity();
 
-    Robotics::LinearControl::LQR<N,M> planner(A, B, Q, R);
+    Robotics::LinearControl::LQR<N, M> planner(A, B, Q, R);
 
     CHECK(true == true);
 }
