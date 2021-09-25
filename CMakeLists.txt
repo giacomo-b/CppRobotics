@@ -34,17 +34,17 @@ CPMAddPackage(
 )
 
 CPMAddPackage(
-  NAME Eigen 
+  NAME Eigen3
   GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
   GIT_TAG 3.3.9
   # URL https://gitlab.com/libeigen/eigen/-/archive/3.3.9/eigen-3.3.9.tar.gz
-  # Eigen's CMakelists are not intended for library use
+  # Eigen3's CMakelists are not intended for library use
   DOWNLOAD_ONLY YES
 )
 
-if(Eigen_ADDED)
-  add_library(Eigen INTERFACE IMPORTED)
-  target_include_directories(Eigen INTERFACE ${Eigen_SOURCE_DIR})
+if(Eigen3_ADDED)
+  add_library(Eigen3 INTERFACE IMPORTED)
+  target_include_directories(Eigen3 INTERFACE ${Eigen3_SOURCE_DIR})
 endif()
 
 # ---- Add source files ----
@@ -63,7 +63,7 @@ set_target_properties(Robotics PROPERTIES CXX_STANDARD 17)
 target_compile_options(Robotics INTERFACE "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(Robotics INTERFACE fmt::fmt Eigen)
+target_link_libraries(Robotics INTERFACE fmt::fmt Eigen3)
 
 target_include_directories(
   Robotics INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
@@ -86,5 +86,5 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 7.1.3;Eigen 3.3.9"
+  DEPENDENCIES "fmt 7.1.3;Eigen3 3.3.9"
 )
