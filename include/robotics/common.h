@@ -5,19 +5,13 @@
 #include <vector>
 
 namespace Robotics {
+    template<int N>
+    using ColumnVector = Eigen::Matrix<double, N, 1>;
 
-    struct Coordinates {
-        double x;
-        double y;
-    };
+    template<int N>
+    using SquareMatrix = Eigen::Matrix<double, N, N>;
+
+    template<int N, int M>
+    using Matrix = Eigen::Matrix<double, N, M>;
 
 }  // namespace Robotics
-
-std::ostream& operator<<(std::ostream& os, const std::vector<Robotics::Coordinates>& coords)
-{
-    for (const auto& coord : coords) {
-        os << std::right << std::setw(10) << std::fixed << std::setprecision(4) << coord.x
-           << std::right << std::setw(10) << std::fixed << std::setprecision(4) << coord.y << '\n';
-    }
-    return os;
-}

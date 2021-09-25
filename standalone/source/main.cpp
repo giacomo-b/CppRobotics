@@ -5,26 +5,28 @@
 #include <chrono>
 #include <iostream>
 #include <random>
-
-using Robotics::Coordinates;
+#include <iomanip>
 
 int main()
 {
+    static constexpr int N = 2;
+    static constexpr int M = 1;
+
     const double dt = 0.1;
 
     // State matrix
-    Eigen::MatrixXd A(2, 2);
+    Robotics::SquareMatrix<N> A;
     A << dt, 1.0, 0, dt;
 
     // Control matrix
-    Eigen::VectorXd B(2);
+    Robotics::Matrix<N,M> B;
     B << 0, 1;
 
     // Weights
-    Eigen::MatrixXd Q = Eigen::MatrixXd::Identity(2, 2);
-    Eigen::MatrixXd R = Eigen::MatrixXd::Identity(1, 1);
+    Robotics::SquareMatrix<N> Q = Robotics::SquareMatrix<N>::Identity();
+    Robotics::SquareMatrix<M> R = Robotics::SquareMatrix<M>::Identity();
 
-    Robotics::LinearControl::LQR lqr_planner(A, B, Q, R);
+    Robotics::LinearControl::LQR<N,M> lqr_planner(A, B, Q, R);
     lqr_planner.setTimeStep(dt);
 
     const int n_test = 10;
@@ -33,17 +35,18 @@ int main()
     std::default_random_engine generator;
     std::uniform_real_distribution<double> distribution(-area, area);
 
-    Coordinates start = {6.0, 6.0};
-    matplot::plot({start.x}, {start.y}, "o")->line_width(3).color("green");
+    Robotics::ColumnVector<N> start = {6.0, 6.0};
+    matplot::plot({start(0)}, {start(1)}, "o")->line_width(3).color("green");
     matplot::hold(matplot::on);
 
     for (auto _ = n_test; _--;) {
-        Coordinates target = {distribution(generator), distribution(generator)};
+        Robotics::ColumnVector<N> target;
+        target << distribution(generator), distribution(generator);
 
-        std::cout << "Goal: (" << target.x << ", " << target.y << "), ";
+        std::cout << "Goal: (" << target(0) << ", " << target(1) << "), ";
         auto t_start = std::chrono::high_resolution_clock::now();
 
-        std::vector<Coordinates> path = lqr_planner.Solve(start, target);
+        auto path = lqr_planner.Solve(start, target);
 
         auto t_end = std::chrono::high_resolution_clock::now();
         if (!path.empty()) {
@@ -51,11 +54,14 @@ int main()
                       << std::chrono::duration<double, std::milli>(t_end - t_start).count()
                       << " ms.\n";
 
+            for (const auto& point : path)
+                std::cout << std::fixed << std::setprecision(4) << point.transpose() << '\n';
+
             // Extract x and y coordinates from path
             std::vector<double> x(path.size()), y(path.size());
-            for (const auto& point : path) {
-                x.push_back(point.x);
-                y.push_back(point.y);
+            for (const auto& state : path) {
+                x.push_back(state(0));
+                y.push_back(state(1));
             }
 
             matplot::plot(x, y, "-")->line_width(2).color("red");
