@@ -78,7 +78,7 @@ All animation gifs are stored here: [AtsushiSakai/PythonRoboticsGifs: Animation 
 
 > git clone https://github.com/giacomo-b/CppRobotics.git
 
-### Build and run the standalone target
+### Build and run examples
 
 Use the following commands to build and run the examples:
 
