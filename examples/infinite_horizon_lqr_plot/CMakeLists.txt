@@ -11,12 +11,6 @@ include(../../cmake/tools.cmake)
 include(../../cmake/CPM.cmake)
 
 CPMAddPackage(
-  GITHUB_REPOSITORY jarro2783/cxxopts
-  VERSION 2.2.1
-  OPTIONS "CXXOPTS_BUILD_EXAMPLES NO" "CXXOPTS_BUILD_TESTS NO" "CXXOPTS_ENABLE_INSTALL YES"
-)
-
-CPMAddPackage(
     NAME matplotplusplus
     GITHUB_REPOSITORY alandefreitas/matplotplusplus
     GIT_TAG origin/master
