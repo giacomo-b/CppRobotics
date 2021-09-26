@@ -1,3 +1,7 @@
 #pragma once
 
-#include <robotics/linear-control.h>
+#include <robotics/common.h>
+#include <robotics/linear-control/linear-control.h>
+#include <robotics/estimation/estimation.h>
+#include <robotics/model/model.h>
+#include <robotics/classical-control/classical-control.h>

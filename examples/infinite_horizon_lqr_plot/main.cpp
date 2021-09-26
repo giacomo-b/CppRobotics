@@ -1,11 +1,9 @@
 #include <matplot/matplot.h>
 #include <robotics/robotics.h>
 
-#include <Eigen/Dense>
 #include <chrono>
 #include <iostream>
 #include <random>
-#include <iomanip>
 
 int main()
 {
@@ -27,7 +25,7 @@ int main()
     Robotics::SquareMatrix<M> R = Robotics::SquareMatrix<M>::Identity();
 
     Robotics::LinearControl::LQR<N,M> lqr_planner(A, B, Q, R);
-    lqr_planner.setTimeStep(dt);
+    lqr_planner.SetTimeStep(dt);
 
     const int n_test = 10;
     const double area = 100.0;

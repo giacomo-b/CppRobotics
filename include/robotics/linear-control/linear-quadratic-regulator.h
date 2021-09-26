@@ -5,8 +5,6 @@
 
 #include <Eigen/Dense>
 #include <cmath>
-#include <iostream>
-#include <string>
 #include <vector>
 
 namespace Robotics::LinearControl {
@@ -76,11 +74,11 @@ namespace Robotics::LinearControl {
             return path;
         }
 
-        void setTimeLimit(double limit) { max_time = limit; }
-        void setTimeStep(double step) { dt = step; }
-        void setFinalPositionTolerance(double tol) { goal_dist = tol; }
-        void setIterationsLimit(int limit) { max_iter = limit; }
-        void setDARETolerance(double tol) { eps = tol; }
+        void SetTimeLimit(double limit) { max_time = limit; }
+        void SetTimeStep(double step) { dt = step; }
+        void SetFinalPositionTolerance(double tol) { goal_dist = tol; }
+        void SetIterationsLimit(int limit) { max_iter = limit; }
+        void SetDARETolerance(double tol) { eps = tol; }
 
       private:
         VectorMx1 ControlAction(State x) const { return -K * x; }
