@@ -26,4 +26,4 @@ add_executable(PID ${sources})
 
 set_target_properties(PID PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
 
-target_link_libraries(PID Robotics::Robotics cxxopts matplot)
+target_link_libraries(PID Robotics::Robotics matplot)

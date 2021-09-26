@@ -28,8 +28,10 @@ namespace Robotics::Model {
         NonlinearSystem(nonlinear_function A, nonlinear_function B, nonlinear_function J, State initial)
             : stateMatrixCallback(std::bind(A, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)),
               controlMatrixCallback(std::bind(B, std::ref(std::placeholders::_4), std::ref(std::placeholders::_5), std::placeholders::_6)),
-              jacobianCallback(std::bind(J, std::ref(std::placeholders::_7), std::ref(std::placeholders::_8), std::placeholders::_9)),
-              x(initial) {}
+              jacobianCallback(std::bind(J, std::ref(std::placeholders::_7), std::ref(std::placeholders::_8), std::placeholders::_9))
+              {
+                  this->x = initial;
+              }
         /**
          * @brief Creates a new LQR path planner
          * @param A state matrix
@@ -47,13 +49,13 @@ namespace Robotics::Model {
          * @return a vector containing the state along the whole path
          */
         State PropagateDynamics(const State& x0, const ControlAction& u) {
-            A = ComputeStateMatrix(x0);
-            B = ComputeControlMatrix(x0);
-            x = A * x0 + B * u;
-            return x;
+            this->A = ComputeStateMatrix(x0);
+            this->B = ComputeControlMatrix(x0);
+            this->x = this->A * x0 + this->B * u;
+            return this->x;
         }
 
-        SquareMatrix<StateSize> GetJacobian(const ControlAction& u) const { return jacobianCallback(x, u, dt); }
+        SquareMatrix<StateSize> GetJacobian(const ControlAction& u) const { return jacobianCallback(this->x, u, this->dt); }
 
       private:
         StateMatrix ComputeStateMatrix(const State& x) const {
@@ -61,7 +63,7 @@ namespace Robotics::Model {
         }
 
         ControlMatrix ComputeControlMatrix(const State& x) const {
-            return controlMatrixCallback(x, dt);
+            return controlMatrixCallback(x, this->dt);
         }
         
         std::function<StateMatrix(const State&, const ControlAction&, double)> stateMatrixCallback;

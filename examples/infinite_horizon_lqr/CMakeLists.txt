@@ -26,4 +26,4 @@ add_executable(InfiniteHorizonLQR ${sources})
 
 set_target_properties(InfiniteHorizonLQR PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
 
-target_link_libraries(InfiniteHorizonLQR Robotics::Robotics cxxopts matplot)
+target_link_libraries(InfiniteHorizonLQR Robotics::Robotics matplot)

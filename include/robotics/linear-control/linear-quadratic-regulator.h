@@ -5,6 +5,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include <vector>
+#include <iostream>
 
 namespace Robotics::LinearControl {
 

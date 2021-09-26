@@ -22,8 +22,12 @@ namespace Robotics::Model {
          * @param Q state weights matrix
          * @param R control weights matrix
          */
-        LinearSystem(StateMatrix A, ControlMatrix B, State initial)
-            : A(A), B(B), x(initial) {}
+        LinearSystem(StateMatrix A, ControlMatrix B, State initial) {
+                this->A = A;
+                this->B = B;
+                this->x = initial;
+        }
+
         /**
          * @brief Creates a new LQR path planner
          * @param A state matrix
@@ -41,8 +45,8 @@ namespace Robotics::Model {
          * @return a vector containing the state along the whole path
          */
         State PropagateDynamics(const State& x0, const ControlAction& u) {
-            x = A * x0 + B * u;
-            return x;
+            this->x = this->A * x0 + this->B * u;
+            return this->x;
         }
     };
     

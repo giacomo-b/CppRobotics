@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <iomanip>
 #include <random>
 
 int main() {
@@ -30,7 +31,7 @@ int main() {
     Robotics::Matrix<N, M> B;
     B << 0, 1/m;
 
-    Robotics::ColumnVector<N> x(0.3, 0);
+    Robotics::ColumnVector<N> x(3.0, 0.5);
     Robotics::Model::LinearSystem<N, M> system(A, B, x);
     system.SetTimeDiscretization(dt);
 
@@ -39,14 +40,14 @@ int main() {
     pid.SetControlActionLimits(-100, 100);
 
     const double target = 0.0;
-    const double sim_time = 50;
+    const double sim_time = 1;
     double time = 0.0;
 
     while(time <= sim_time) {
         time += dt;
         double position = system.GetState()(0);
         double u = pid.ComputeControlAction(position, target);
-        std::cout << "Current position: " << position << '\t' << "Control action: " << u << '\n';
+        std::cout << "Current position: " << std::fixed << std::setprecision(20) << position << '\t' << "Control action: " << u << '\n';
         system.PropagateDynamics(system.GetState(), ControlAction(u));
     }
 

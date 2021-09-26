@@ -18,6 +18,9 @@ namespace Robotics::Estimation {
         using State = ColumnVector<StateSize>;
         using ControlAction = ColumnVector<ControlSize>;
         using Measurement = ColumnVector<MeasureSize>;
+
+        using NonlinearSystem = Robotics::Model::NonlinearSystem<StateSize, ControlSize>;
+        using ObservedSystem = Robotics::Model::ObservedSystem<StateSize, ControlSize, MeasureSize>;
     
       public:
         /**
@@ -63,7 +66,6 @@ namespace Robotics::Estimation {
         SquareMatrix<StateSize> P_predicted, P_estimate;
         SquareMatrix<MeasureSize> S;
         Robotics::Matrix<StateSize, MeasureSize> K;
-
 
         State x_predicted, x_estimate;
         Measurement z_predicted, residual;

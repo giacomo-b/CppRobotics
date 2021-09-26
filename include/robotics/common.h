@@ -31,7 +31,7 @@ namespace Robotics {
         ColumnVector<Size> GetColumnVector() {
             ColumnVector<Size> rand_vector;
 
-            for (auto& element : vector)
+            for (auto& element : rand_vector)
                 element = distribution(generator);
             
             return rand_vector;
@@ -39,7 +39,7 @@ namespace Robotics {
         
       private:
         std::default_random_engine generator;
-        std::normal_distribution<double> distribution(0.0, 1.0);
-    }
+        std::normal_distribution<double> distribution{0.0, 1.0};
+    };
 
 }  // namespace Robotics

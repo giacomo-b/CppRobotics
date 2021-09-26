@@ -26,4 +26,4 @@ add_executable(EKF ${sources})
 
 set_target_properties(EKF PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
 
-target_link_libraries(EKF Robotics::Robotics cxxopts matplot)
+target_link_libraries(EKF Robotics::Robotics matplot)
