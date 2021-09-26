@@ -59,7 +59,7 @@ set_target_properties(Robotics PROPERTIES CXX_STANDARD 17)
 target_compile_options(Robotics INTERFACE "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(Robotics INTERFACE fmt::fmt Eigen3)
+target_link_libraries(Robotics INTERFACE Eigen3)
 
 target_include_directories(
   Robotics INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
@@ -82,5 +82,5 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 7.1.3;Eigen3 3.3.9"
+  DEPENDENCIES "Eigen3 3.3.9"
 )

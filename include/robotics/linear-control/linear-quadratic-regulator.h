@@ -1,6 +1,5 @@
 #pragma once
 
-#include <fmt/format.h>
 #include <robotics/common.h>
 
 #include <Eigen/Dense>
