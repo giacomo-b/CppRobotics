@@ -82,9 +82,5 @@ packageProject(
   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
   COMPATIBILITY SameMajorVersion
-<<<<<<< HEAD
-  DEPENDENCIES "fmt 7.1.3;Eigen3 3.3.9"
-=======
   DEPENDENCIES "Eigen3 3.3.9"
->>>>>>> estimation
 )
