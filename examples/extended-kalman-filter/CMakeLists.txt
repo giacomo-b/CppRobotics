@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
-project(InfiniteHorizonLQRPlot LANGUAGES CXX)
+project(EKF LANGUAGES CXX)
 
 # --- Import tools ----
 
@@ -20,10 +20,12 @@ CPMAddPackage(NAME Robotics SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
 
 # ---- Create standalone executable ----
 
-file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+)
 
-add_executable(InfiniteHorizonLQRPlot ${sources})
+add_executable(EKF ${sources})
 
-set_target_properties(InfiniteHorizonLQRPlot PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
+set_target_properties(EKF PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
 
-target_link_libraries(InfiniteHorizonLQRPlot Robotics::Robotics matplot)
+target_link_libraries(EKF Robotics::Robotics matplot)

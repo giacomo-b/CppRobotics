@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
-project(InfiniteHorizonLQR LANGUAGES CXX)
+project(PID LANGUAGES CXX)
 
 # --- Import tools ----
 
@@ -22,12 +22,8 @@ CPMAddPackage(NAME Robotics SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
 
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
-add_executable(InfiniteHorizonLQR ${sources})
+add_executable(PID ${sources})
 
-set_target_properties(InfiniteHorizonLQR PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
+set_target_properties(PID PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "main")
 
-<<<<<<< HEAD
-target_link_libraries(InfiniteHorizonLQR Robotics::Robotics cxxopts)
-=======
-target_link_libraries(InfiniteHorizonLQR Robotics::Robotics matplot)
->>>>>>> estimation
+target_link_libraries(PID Robotics::Robotics matplot)

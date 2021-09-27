@@ -1,12 +1,10 @@
 #pragma once
 
-#include <fmt/format.h>
 #include <robotics/common.h>
 
 #include <Eigen/Dense>
 #include <cmath>
 #include <iostream>
-#include <string>
 #include <vector>
 
 namespace Robotics::LinearControl {
@@ -20,7 +18,7 @@ namespace Robotics::LinearControl {
 
         using MatrixNxN = SquareMatrix<N>;
         using MatrixMxM = SquareMatrix<M>;
-        using ControlMatrix = Matrix<N, M>;
+        using InputMatrix = Matrix<N, M>;
         using GainMatrix = Matrix<M, N>;
 
         using State = VectorNx1;
@@ -33,7 +31,7 @@ namespace Robotics::LinearControl {
          * @param Q state weights matrix
          * @param R control weights matrix
          */
-        LQR(MatrixNxN A, ControlMatrix B, MatrixNxN Q, MatrixMxM R)
+        LQR(MatrixNxN A, InputMatrix B, MatrixNxN Q, MatrixMxM R)
             : A(A), B(B), Q(Q), R(R), K(ComputeGain())
         {
         }
@@ -60,7 +58,7 @@ namespace Robotics::LinearControl {
             while (time < max_time) {
                 time += dt;
 
-                u = ControlAction(x);
+                u = Input(x);
                 x = A * x + B * u;
 
                 path.push_back(x + target);
@@ -79,14 +77,14 @@ namespace Robotics::LinearControl {
             return path;
         }
 
-        void setTimeLimit(double limit) { max_time = limit; }
-        void setTimeStep(double step) { dt = step; }
-        void setFinalPositionTolerance(double tol) { goal_dist = tol; }
-        void setIterationsLimit(int limit) { max_iter = limit; }
-        void setDARETolerance(double tol) { eps = tol; }
+        void SetTimeLimit(double limit) { max_time = limit; }
+        void SetTimeStep(double step) { dt = step; }
+        void SetFinalPositionTolerance(double tol) { goal_dist = tol; }
+        void SetIterationsLimit(int limit) { max_iter = limit; }
+        void SetDARETolerance(double tol) { eps = tol; }
 
       private:
-        VectorMx1 ControlAction(State x) const { return -K * x; }
+        VectorMx1 Input(State x) const { return -K * x; }
 
         /**
          * @brief Computes the LQR problem gain matrix
@@ -118,7 +116,7 @@ namespace Robotics::LinearControl {
         }
 
         MatrixNxN A;
-        ControlMatrix B;
+        InputMatrix B;
         MatrixNxN Q;
         MatrixMxM R;
         GainMatrix K;

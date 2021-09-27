@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <robotics/linear-control/lqr.h>
+#include <robotics/linear-control/linear-quadratic-regulator.h>
 
 #include <Eigen/Dense>
 #include <string>
