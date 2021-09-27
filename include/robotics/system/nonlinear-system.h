@@ -35,14 +35,10 @@ namespace Robotics::Model {
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C,
                         f<FeedthroughMatrix> D)
-            : state_matrix(std::bind(A, std::ref(std::placeholders::_1),
-                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
-              input_matrix(std::bind(B, std::ref(std::placeholders::_1),
-                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
-              output_matrix(std::bind(C, std::ref(std::placeholders::_1),
-                                      std::ref(std::placeholders::_2), std::placeholders::_3)),
-              feedthrough_matrix(std::bind(D, std::ref(std::placeholders::_1),
-                                           std::ref(std::placeholders::_2), std::placeholders::_3))
+            : state_matrix(std::move(A)),
+              input_matrix(std::move(B)),
+              output_matrix(std::move(C)),
+              feedthrough_matrix(std::move(D))
         {
         }
 
@@ -54,12 +50,9 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C)
-            : state_matrix(std::bind(A, std::ref(std::placeholders::_1),
-                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
-              input_matrix(std::bind(B, std::ref(std::placeholders::_1),
-                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
-              output_matrix(std::bind(C, std::ref(std::placeholders::_1),
-                                      std::ref(std::placeholders::_2), std::placeholders::_3))
+            : state_matrix(std::move(A)),
+              input_matrix(std::move(B)),
+              output_matrix(std::move(C))
         {
         }
 
@@ -71,25 +64,21 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B)
-            : state_matrix(std::bind(A, std::ref(std::placeholders::_1),
-                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
-              input_matrix(std::bind(B, std::ref(std::placeholders::_1),
-                                     std::ref(std::placeholders::_2), std::placeholders::_3))
+            : state_matrix(std::move(A)),
+              input_matrix(std::move(B))
         {
         }
 
         // TODO: to be removed once automatic differentiation is implemented
         void SetStateJacobian(f<SquareMatrix<StateSize>> J_F)
         {
-            state_jacobian = std::bind(J_F, std::ref(std::placeholders::_1),
-                                       std::ref(std::placeholders::_2), std::placeholders::_3);
+            state_jacobian = std::move(J_F);
         }
 
         // TODO: to be removed once automatic differentiation is implemented
         void SetOutputJacobian(f<Matrix<OutputSize, StateSize>> J_H)
         {
-            output_jacobian = std::bind(J_H, std::ref(std::placeholders::_1),
-                                        std::ref(std::placeholders::_2), std::placeholders::_3);
+            output_jacobian = std::move(J_H);
         }
 
         /**
