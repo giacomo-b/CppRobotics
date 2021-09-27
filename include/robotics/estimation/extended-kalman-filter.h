@@ -1,8 +1,7 @@
 #pragma once
 
 #include <robotics/common.h>
-#include <robotics/model/nonlinear-system.h>
-#include <robotics/model/observed-system.h>
+#include <robotics/system/nonlinear-system.h>
 
 #include <Eigen/Dense>
 #include <cmath>
@@ -13,14 +12,13 @@ namespace Robotics::Estimation {
     /**
      * @brief A class for implemeting an Extended Kalman Filter
      */
-    template <int StateSize, int ControlSize, int MeasureSize>
+    template <int StateSize, int InputSize, int OutputSize>
     class EKF {
         using State = ColumnVector<StateSize>;
-        using ControlAction = ColumnVector<ControlSize>;
-        using Measurement = ColumnVector<MeasureSize>;
+        using Input = ColumnVector<InputSize>;
+        using Measurement = ColumnVector<OutputSize>;
 
-        using NonlinearSystem = Robotics::Model::NonlinearSystem<StateSize, ControlSize>;
-        using ObservedSystem = Robotics::Model::ObservedSystem<StateSize, ControlSize, MeasureSize>;
+        using NonlinearSystem = Robotics::Model::NonlinearSystem<StateSize, InputSize, OutputSize>;
     
       public:
         /**
@@ -30,27 +28,27 @@ namespace Robotics::Estimation {
          * @param Q state weights matrix
          * @param R control weights matrix
          */
-        EKF(NonlinearSystem system, ObservedSystem observed)
-            : system(system), observed_system(observed) {}
+        EKF(NonlinearSystem system, SquareMatrix<StateSize> Q, SquareMatrix<OutputSize> R)
+            : system(system), Q(Q), R(R) {}
         
-        State Update(State previous_estimate, Measurement z, ControlAction u) {
+        State Update(State previous_estimate, Measurement z, Input u) {
 
             // Predicted state estimate
             x_predicted = system.PropagateDynamics(previous_estimate, u);
 
             // Predicted covariance estimate
             SquareMatrix<StateSize> J_F = system.GetJacobian(u);
-            P_predicted = J_F * P_estimate * J_F.transpose() + observed_system.GetStateCovariance();
+            P_predicted = J_F * P_estimate * J_F.transpose() + Q;
 
             // Update
-            z_predicted = observed_system.GetExractionMatrix() * x_predicted;
+            z_predicted = system.GetOutputMatrix() * x_predicted;
             residual = z - z_predicted;
 
-            const Matrix<MeasureSize, StateSize>& J_H = observed_system.GetExtractionMatrixJacobian();
-            S = J_H * P_predicted * J_H.transpose() + observed_system.GetObservationCovariance();
+            const Matrix<OutputSize, StateSize>& J_H = system.GetOutputMatrixJacobian();
+            S = J_H * P_predicted * J_H.transpose() + R;
             K = P_predicted * J_H.transpose() * S.inverse();
             x_estimate = x_predicted + K * residual;
-            P_estimate = (ColumnVector<State>::Identity() - K * J_H) * P_predicted;
+            P_estimate = (SquareMatrix<StateSize>::Identity() - K * J_H) * P_predicted;
 
             return x_estimate;
         }
@@ -59,16 +57,21 @@ namespace Robotics::Estimation {
 
       private:
         NonlinearSystem system;
-        ObservedSystem observed_system;
 
         double dt{0.1};
 
         SquareMatrix<StateSize> P_predicted, P_estimate;
-        SquareMatrix<MeasureSize> S;
-        Robotics::Matrix<StateSize, MeasureSize> K;
+        SquareMatrix<OutputSize> S;
+        Robotics::Matrix<StateSize, OutputSize> K;
 
         State x_predicted, x_estimate;
         Measurement z_predicted, residual;
+
+        // State covariance
+        const SquareMatrix<StateSize> Q;
+
+        // Observation covariance
+        const SquareMatrix<OutputSize> R;
     };
     
 }  // namespace Robotics::LinearControl

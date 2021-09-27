@@ -1,9 +1,5 @@
 #pragma once
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-#define _USE_MATH_DEFINES
-#endif
-
 #include <Eigen/Dense>
 #include <iomanip>
 #include <vector>
@@ -21,7 +17,7 @@ namespace Robotics {
     using Matrix = Eigen::Matrix<double, N, M>;
 
     double deg2rad(double deg) {
-        return deg * M_PI / 180.0;
+        return deg * 3.14 / 180.0; // TODO: replace 3.14 with M_PI (cross-platform)
     }
 
     class NormalDistributionRandomGenerator {

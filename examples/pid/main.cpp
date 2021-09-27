@@ -8,18 +8,19 @@
 int main() {
     static constexpr int N = 2;
     static constexpr int M = 1;
+    static constexpr int P = 1;
 
-    using ControlAction = Robotics::ColumnVector<M>;
+    using Input = Robotics::ColumnVector<M>;
 
     // Spring-mass-damper parameters
     const double m = 1.0,
-                 k = 1.0,
-                 b = 0.2;
+                 k = 20.0,
+                 b = 10.0;
 
     // PID parameters
-    const double Kp = 35,
-                 Ki = 135,
-                 Kd = 2;
+    const double Kp = 300,
+                 Ki = 1000,
+                 Kd = 0.1;
     
     const double dt = 0.1;
 
@@ -31,24 +32,27 @@ int main() {
     Robotics::Matrix<N, M> B;
     B << 0, 1/m;
 
-    Robotics::ColumnVector<N> x(3.0, 0.5);
-    Robotics::Model::LinearSystem<N, M> system(A, B, x);
+    Robotics::Matrix<P, N> C;
+    C << 1, 0;
+
+    Robotics::Model::LinearSystem<N, M, P> system(A, B, C);
+    system.SetInitialState(Robotics::ColumnVector<N>(0.0, 0.0));
     system.SetTimeDiscretization(dt);
 
     Robotics::ClassicalControl::PID pid(Kp, Ki, Kd);
     pid.SetTimeDiscretization(dt);
     pid.SetControlActionLimits(-100, 100);
 
-    const double target = 0.0;
+    const double target = 1.0;
     const double sim_time = 1;
     double time = 0.0;
 
     while(time <= sim_time) {
         time += dt;
-        double position = system.GetState()(0);
+        double position = system.GetOutput()(0);
         double u = pid.ComputeControlAction(position, target);
         std::cout << "Current position: " << std::fixed << std::setprecision(20) << position << '\t' << "Control action: " << u << '\n';
-        system.PropagateDynamics(system.GetState(), ControlAction(u));
+        system.PropagateDynamics(system.GetState(), Input(u));
     }
 
     return 0;
