@@ -33,8 +33,8 @@ CPMAddPackage(
   NAME Eigen3
   GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
   GIT_TAG 3.3.9
-  # URL https://gitlab.com/libeigen/eigen/-/archive/3.3.9/eigen-3.3.9.tar.gz
-  # Eigen3's CMakelists are not intended for library use
+  # URL https://gitlab.com/libeigen/eigen/-/archive/3.3.9/eigen-3.3.9.tar.gz Eigen3's CMakelists are
+  # not intended for library use
   DOWNLOAD_ONLY YES
 )
 

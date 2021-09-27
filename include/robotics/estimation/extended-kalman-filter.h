@@ -12,14 +12,13 @@ namespace Robotics::Estimation {
     /**
      * @brief A class for implemeting an Extended Kalman Filter
      */
-    template <int StateSize, int InputSize, int OutputSize>
-    class EKF {
+    template <int StateSize, int InputSize, int OutputSize> class EKF {
         using State = ColumnVector<StateSize>;
         using Input = ColumnVector<InputSize>;
         using Measurement = ColumnVector<OutputSize>;
 
         using NonlinearSystem = Robotics::Model::NonlinearSystem<StateSize, InputSize, OutputSize>;
-    
+
       public:
         /**
          * @brief Creates a new LQR path planner
@@ -29,10 +28,12 @@ namespace Robotics::Estimation {
          * @param R control weights matrix
          */
         EKF(NonlinearSystem system, SquareMatrix<StateSize> Q, SquareMatrix<OutputSize> R)
-            : system(system), Q(Q), R(R) {}
-        
-        State Update(State previous_estimate, Measurement z, Input u) {
+            : system(system), Q(Q), R(R)
+        {
+        }
 
+        State Update(State previous_estimate, Measurement z, Input u)
+        {
             // Predicted state estimate
             x_predicted = system.PropagateDynamics(previous_estimate, u);
 
@@ -73,5 +74,5 @@ namespace Robotics::Estimation {
         // Observation covariance
         const SquareMatrix<OutputSize> R;
     };
-    
-}  // namespace Robotics::LinearControl
+
+}  // namespace Robotics::Estimation

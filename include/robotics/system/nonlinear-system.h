@@ -1,8 +1,9 @@
 #pragma once
 
 #include <robotics/system/system-base.h>
-#include <functional>
+
 #include <cmath>
+#include <functional>
 
 namespace Robotics::Model {
 
@@ -11,21 +12,19 @@ namespace Robotics::Model {
      */
     template <int StateSize, int InputSize, int OutputSize>
     class NonlinearSystem : public SystemBase<StateSize, InputSize, OutputSize> {
-        
-        using SystemBase = SystemBase<StateSize, InputSize, OutputSize>;
+        using System = SystemBase<StateSize, InputSize, OutputSize>;
 
-        using State = SystemBase::State;
-        using Input = SystemBase::Input;
-        using Output = SystemBase::Output;
+        using State = typename System::State;
+        using Input = typename System::Input;
+        using Output = typename System::Output;
 
-        using StateMatrix = SystemBase::StateMatrix;
-        using InputMatrix = SystemBase::InputMatrix;
-        using OutputMatrix = SystemBase::OutputMatrix;
-        using FeedthroughMatrix = SystemBase::FeedthroughMatrix;
-        
-        template<typename T>
-        using f = std::function<T(const State&, const Input&, double)>;
-    
+        using StateMatrix = typename System::StateMatrix;
+        using InputMatrix = typename System::InputMatrix;
+        using OutputMatrix = typename System::OutputMatrix;
+        using FeedthroughMatrix = typename System::FeedthroughMatrix;
+
+        template <typename T> using f = std::function<T(const State&, const Input&, double)>;
+
       public:
         /**
          * @brief Creates a new LQR path planner
@@ -34,13 +33,18 @@ namespace Robotics::Model {
          * @param Q state weights matrix
          * @param R control weights matrix
          */
-        NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C, f<FeedthroughMatrix> D)
-            : state_matrix(std::bind(A, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)),
-              input_matrix(std::bind(B, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)),
-              output_matrix(std::bind(C, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)),
-              feedthrough_matrix(std::bind(D, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3))
-              {
-              }
+        NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C,
+                        f<FeedthroughMatrix> D)
+            : state_matrix(std::bind(A, std::ref(std::placeholders::_1),
+                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
+              input_matrix(std::bind(B, std::ref(std::placeholders::_1),
+                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
+              output_matrix(std::bind(C, std::ref(std::placeholders::_1),
+                                      std::ref(std::placeholders::_2), std::placeholders::_3)),
+              feedthrough_matrix(std::bind(D, std::ref(std::placeholders::_1),
+                                           std::ref(std::placeholders::_2), std::placeholders::_3))
+        {
+        }
 
         /**
          * @brief Creates a new LQR path planner
@@ -50,10 +54,15 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C)
-            : state_matrix(std::bind(A, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)),
-              input_matrix(std::bind(B, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)),
-              output_matrix(std::bind(C, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)) {}
-        
+            : state_matrix(std::bind(A, std::ref(std::placeholders::_1),
+                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
+              input_matrix(std::bind(B, std::ref(std::placeholders::_1),
+                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
+              output_matrix(std::bind(C, std::ref(std::placeholders::_1),
+                                      std::ref(std::placeholders::_2), std::placeholders::_3))
+        {
+        }
+
         /**
          * @brief Creates a new LQR path planner
          * @param A state matrix
@@ -62,17 +71,25 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B)
-            : state_matrix(std::bind(A, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)),
-              input_matrix(std::bind(B, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3)) {}
-        
-        // TODO: to be removed once automatic differentiation is implemented
-        void SetStateJacobian(f<SquareMatrix<StateSize>> J_F) {
-            state_jacobian = std::bind(J_F, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3);
+            : state_matrix(std::bind(A, std::ref(std::placeholders::_1),
+                                     std::ref(std::placeholders::_2), std::placeholders::_3)),
+              input_matrix(std::bind(B, std::ref(std::placeholders::_1),
+                                     std::ref(std::placeholders::_2), std::placeholders::_3))
+        {
         }
 
         // TODO: to be removed once automatic differentiation is implemented
-        void SetOutputJacobian(f<Matrix<OutputSize, StateSize>> J_H) {
-            output_jacobian = std::bind(J_H, std::ref(std::placeholders::_1), std::ref(std::placeholders::_2), std::placeholders::_3);
+        void SetStateJacobian(f<SquareMatrix<StateSize>> J_F)
+        {
+            state_jacobian = std::bind(J_F, std::ref(std::placeholders::_1),
+                                       std::ref(std::placeholders::_2), std::placeholders::_3);
+        }
+
+        // TODO: to be removed once automatic differentiation is implemented
+        void SetOutputJacobian(f<Matrix<OutputSize, StateSize>> J_H)
+        {
+            output_jacobian = std::bind(J_H, std::ref(std::placeholders::_1),
+                                        std::ref(std::placeholders::_2), std::placeholders::_3);
         }
 
         /**
@@ -81,28 +98,29 @@ namespace Robotics::Model {
          * @param target the target state
          * @return a vector containing the state along the whole path
          */
-        State PropagateDynamics(const State& x0, const Input& u) {
+        State PropagateDynamics(const State& x0, const Input& u)
+        {
             this->A = ComputeStateMatrix(x0);
             this->B = ComputeInputMatrix(x0);
             this->x = this->A * x0 + this->B * u;
             return this->x;
         }
 
-        SquareMatrix<StateSize> GetJacobian(const Input& u) const { return jacobianCallback(this->x, u, this->dt); }
-
-        const OutputMatrix& GetOutputMatrixJacobian() const {
-            return J_H;
+        SquareMatrix<StateSize> GetJacobian(const Input& u) const
+        {
+            return jacobianCallback(this->x, u, this->dt);
         }
+
+        const OutputMatrix& GetOutputMatrixJacobian() const { return J_H; }
 
       private:
-        StateMatrix ComputeStateMatrix(const State& x) const {
-            return stateMatrixCallback(x);
-        }
+        StateMatrix ComputeStateMatrix(const State& x) const { return stateMatrixCallback(x); }
 
-        InputMatrix ComputeInputMatrix(const State& x) const {
+        InputMatrix ComputeInputMatrix(const State& x) const
+        {
             return InputMatrixCallback(x, this->dt);
         }
-        
+
         f<StateMatrix> state_matrix;
         f<InputMatrix> input_matrix;
         f<OutputMatrix> output_matrix;
@@ -111,8 +129,8 @@ namespace Robotics::Model {
         f<SquareMatrix<StateSize>> state_jacobian;
         f<Matrix<OutputSize, StateSize>> output_jacobian;
 
-        SquareMatrix<StateSize> J_F; // Jacobian
+        SquareMatrix<StateSize> J_F;  // Jacobian
         OutputMatrix J_H;
     };
-    
-}  // namespace Robotics::LinearControl
+
+}  // namespace Robotics::Model

@@ -1,16 +1,15 @@
 #pragma once
 
-#include <Eigen/Dense>
 #include <robotics/common.h>
+
+#include <Eigen/Dense>
 
 namespace Robotics::Model {
 
     /**
      * @brief A class for implemeting an Extended Kalman Filter
      */
-    template <int StateSize, int InputSize, int OutputSize>
-    class SystemBase {
-    
+    template <int StateSize, int InputSize, int OutputSize> class SystemBase {
       public:
         using State = ColumnVector<StateSize>;
         using Input = ColumnVector<InputSize>;
@@ -33,19 +32,21 @@ namespace Robotics::Model {
 
         void SetInitialState(State state) { x = state; }
 
-        State GetState() const {  return x; }
+        State GetState() const { return x; }
 
-        Output GetOutput() {
+        Output GetOutput()
+        {
             y = C * x;
             return y;
         }
-        
+
         OutputMatrix GetOutputMatrix() const { return C; }
 
-        Output GetNoisyMeasurement(const ColumnVector<OutputSize>& noise) {
+        Output GetNoisyMeasurement(const ColumnVector<OutputSize>& noise)
+        {
             return C * x + noise * random.GetColumnVector<OutputSize>();
         }
-        
+
       protected:
         double dt{0.1};
         State x{State::Zero()};
@@ -58,5 +59,5 @@ namespace Robotics::Model {
 
         Robotics::NormalDistributionRandomGenerator random;
     };
-    
-}  // namespace Robotics::LinearControl
+
+}  // namespace Robotics::Model

@@ -9,18 +9,17 @@ namespace Robotics::Model {
      */
     template <int StateSize, int InputSize, int OutputSize>
     class LinearSystem : public SystemBase<StateSize, InputSize, OutputSize> {
+        using System = SystemBase<StateSize, InputSize, OutputSize>;
 
-        using SystemBase = SystemBase<StateSize, InputSize, OutputSize>;
+        using State = typename System::State;
+        using Input = typename System::Input;
+        using Output = typename System::Output;
 
-        using State = SystemBase::State;
-        using Input = SystemBase::Input;
-        using Output = SystemBase::Output;
+        using StateMatrix = typename System::StateMatrix;
+        using InputMatrix = typename System::InputMatrix;
+        using OutputMatrix = typename System::OutputMatrix;
+        using FeedthroughMatrix = typename System::FeedthroughMatrix;
 
-        using StateMatrix = SystemBase::StateMatrix;
-        using InputMatrix = SystemBase::InputMatrix;
-        using OutputMatrix = SystemBase::OutputMatrix;
-        using FeedthroughMatrix = SystemBase::FeedthroughMatrix;
-    
       public:
         /**
          * @brief Creates a new LQR path planner
@@ -29,11 +28,12 @@ namespace Robotics::Model {
          * @param Q state weights matrix
          * @param R control weights matrix
          */
-        LinearSystem(StateMatrix A, InputMatrix B, OutputMatrix C, FeedthroughMatrix D) {
-                this->A = A;
-                this->B = B;
-                this->C = C;
-                this->D = D;
+        LinearSystem(StateMatrix A, InputMatrix B, OutputMatrix C, FeedthroughMatrix D)
+        {
+            this->A = A;
+            this->B = B;
+            this->C = C;
+            this->D = D;
         }
 
         /**
@@ -44,8 +44,10 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         LinearSystem(StateMatrix A, InputMatrix B, OutputMatrix C)
-            : LinearSystem(A, B, C, FeedthroughMatrix::Zero()) {}
-        
+            : LinearSystem(A, B, C, FeedthroughMatrix::Zero())
+        {
+        }
+
         /**
          * @brief Creates a new LQR path planner
          * @param A state matrix
@@ -54,7 +56,9 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         LinearSystem(StateMatrix A, InputMatrix B)
-            : LinearSystem(A, B, OutputMatrix::Zero(), FeedthroughMatrix::Zero()) {}
+            : LinearSystem(A, B, OutputMatrix::Zero(), FeedthroughMatrix::Zero())
+        {
+        }
 
         /**
          * @brief Computes the optimal path to reach the target state
@@ -62,10 +66,11 @@ namespace Robotics::Model {
          * @param target the target state
          * @return a vector containing the state along the whole path
          */
-        State PropagateDynamics(const State& x0, const Input& u) {
+        State PropagateDynamics(const State& x0, const Input& u)
+        {
             this->x = this->A * x0 + this->B * u;
             return this->x;
         }
     };
-    
-}  // namespace Robotics::LinearControl
+
+}  // namespace Robotics::Model

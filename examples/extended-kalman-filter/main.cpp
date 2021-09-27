@@ -1,16 +1,18 @@
 #include <matplot/matplot.h>
 #include <robotics/robotics.h>
-#include "dynamics.h"
+
 #include <chrono>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
+
+#include "dynamics.h"
 
 Input sample_input();
 
 int main()
 {
-    using Robotics::SquareMatrix;
     using Robotics::ColumnVector;
+    using Robotics::SquareMatrix;
 
     const double dt = 0.1;
     const double sim_time = 50;
@@ -23,17 +25,18 @@ int main()
     system.SetOutputJacobian(output_jacobian);
     system.SetTimeDiscretization(dt);
 
-    // State and observation covariance 
+    // State and observation covariance
     const SquareMatrix<N> Q = ColumnVector<N>(0.1, 0.1, deg2rad(1.0), 1.0).cwiseAbs2().asDiagonal();
     const SquareMatrix<P> R = ColumnVector<P>(1.0, 1.0).cwiseAbs2().asDiagonal();
 
-    const SquareMatrix<M> input_disturbance = ColumnVector<M>(1.0, deg2rad(30)).cwiseAbs2().asDiagonal();
+    const SquareMatrix<M> input_disturbance
+        = ColumnVector<M>(1.0, deg2rad(30)).cwiseAbs2().asDiagonal();
     const SquareMatrix<P> gps_noise = ColumnVector<P>(0.5, 0.5).cwiseAbs2().asDiagonal();
-    
+
     // Estimated and dead-reckoning states
     State x_estimated = ColumnVector<N>::Zero();
     State x_dr = ColumnVector<N>::Zero();
-    
+
     // Measurement
     ColumnVector<P> z = ColumnVector<P>::Zero();
 
@@ -60,7 +63,7 @@ int main()
 
     double time = 0.0;
 
-    while(time <= sim_time) {
+    while (time <= sim_time) {
         time += dt;
 
         // Select new control action
@@ -84,15 +87,16 @@ int main()
         ekf_history.push_back(x_estimated);
         real_history.push_back(x_real);
         dr_history.push_back(x_dr);
-        measurements.push_back(z);        
+        measurements.push_back(z);
     }
 
     return 0;
 }
 
-Input sample_input() {
-    double v = 1.0;         // [m/s]
-    double yawrate = 0.1;   // [rad/s]
+Input sample_input()
+{
+    double v = 1.0;        // [m/s]
+    double yawrate = 0.1;  // [rad/s]
 
     return Input(v, yawrate);
 }

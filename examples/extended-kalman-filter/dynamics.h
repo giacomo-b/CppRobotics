@@ -1,8 +1,8 @@
 #pragma once
 
-static constexpr int N = 4; // State size
-static constexpr int M = 2; // Control action size
-static constexpr int P = 2; // Measurement size
+static constexpr int N = 4;  // State size
+static constexpr int M = 2;  // Control action size
+static constexpr int P = 2;  // Measurement size
 
 using State = Robotics::ColumnVector<N>;
 using Input = Robotics::ColumnVector<M>;
@@ -28,7 +28,8 @@ StateMatrix A(const State& state, const Input& control, double dt)
     return A;
 }
 
-InputMatrix B(State state, const Input& control, double dt) {
+InputMatrix B(State state, const Input& control, double dt)
+{
     InputMatrix B;
 
     // clang-format off
@@ -41,7 +42,8 @@ InputMatrix B(State state, const Input& control, double dt) {
     return B;
 }
 
-OutputMatrix C(State state, const Input& control, double dt) {
+OutputMatrix C(State state, const Input& control, double dt)
+{
     OutputMatrix H;
     // clang-format off
     H << 1, 0, 0, 0,
@@ -71,7 +73,7 @@ StateMatrix state_jacobian(const State& state, const Input& control, double dt)
 
     double yaw = state(2);
     double v = control(0);
-    
+
     // clang-format off
     JF << 1.0, 0.0, -dt * v * sin(yaw), dt * cos(yaw),
           0.0, 1.0,  dt * v * cos(yaw), dt * sin(yaw),
@@ -82,7 +84,8 @@ StateMatrix state_jacobian(const State& state, const Input& control, double dt)
     return JF;
 }
 
-OutputMatrix output_jacobian(const State& state, const Input& control, double dt) {
+OutputMatrix output_jacobian(const State& state, const Input& control, double dt)
+{
     OutputMatrix JH;
     // clang-format off
     JH << 1, 0, 0, 0,
