@@ -2,14 +2,15 @@
 [![Actions Status](https://github.com/giacomo-b/CppRobotics/workflows/Windows/badge.svg)](https://github.com/giacomo/CppRobotics/actions)
 [![Actions Status](https://github.com/giacomo-b/CppRobotics/workflows/Ubuntu/badge.svg)](https://github.com/giacomo/CppRobotics/actions)
 [![Actions Status](https://github.com/giacomo-b/CppRobotics/workflows/Style/badge.svg)](https://github.com/giacomo/CppRobotics/actions)
-![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/giacomo-b/CppRobotics/master)
-<!--[![codecov](https://codecov.io/gh/TheLartians/ModernCppStarter/branch/master/graph/badge.svg)](https://codecov.io/gh/TheLartians/CppRobotics)
+
+<!--![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/giacomo-b/CppRobotics/master)
+[![codecov](https://codecov.io/gh/TheLartians/ModernCppStarter/branch/master/graph/badge.svg)](https://codecov.io/gh/TheLartians/CppRobotics)
 
  <p align="center">
   <img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" height="175" width="auto" />
 </p> -->
 
-<img src="https://github.com/AtsushiSakai/PythonRobotics/raw/master/icon.png?raw=true" align="right" width="300" alt="header pic"/>
+<img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" align="right" width="300" alt="header pic"/>
 
 # CppRobotics
 
