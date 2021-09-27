@@ -43,7 +43,8 @@ int main()
     ColumnVector<P> z = ColumnVector<P>::Zero();
 
     // For logging
-    std::vector<State> ekf_history, real_history, dr_history, measurements;
+    std::vector<State> ekf_history, real_history, dr_history;
+    std::vector<Output> measurements;
 
     ekf_history.reserve(n_steps);
     ekf_history.push_back(x_estimated);

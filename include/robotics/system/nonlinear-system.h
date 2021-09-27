@@ -94,12 +94,14 @@ namespace Robotics::Model {
             this->x = this->A * this->x + this->B * u;
         }
 
-        SquareMatrix<StateSize> GetJacobian(const Input& u) const
+        SquareMatrix<StateSize> GetStateJacobian(const Input& u) const
         {
-            return jacobianCallback(this->x, u, this->dt);
+            return state_jacobian(this->x, u, this->dt);
         }
 
-        const OutputMatrix& GetOutputMatrixJacobian() const { return J_H; }
+        OutputMatrix GetOutputJacobian(const Input& u) const {
+            return output_jacobian(this->x, u, this->dt);
+        }
 
       private:
         StateMatrix ComputeStateMatrix(const Input& u) const

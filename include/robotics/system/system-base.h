@@ -42,7 +42,7 @@ namespace Robotics::Model {
 
         OutputMatrix GetOutputMatrix() const { return C; }
 
-        Output GetNoisyMeasurement(const ColumnVector<OutputSize>& noise)
+        Output GetNoisyMeasurement(const SquareMatrix<OutputSize>& noise)
         {
             return C * x + noise * random.GetColumnVector<OutputSize>();
         }
