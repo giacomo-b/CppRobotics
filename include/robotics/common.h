@@ -24,8 +24,7 @@ namespace Robotics {
         {
             ColumnVector<Size> rand_vector;
 
-            for (auto i = 0; i < rand_vector.size(); i++)
-                rand_vector(i) = distribution(generator);
+            for (auto i = 0; i < rand_vector.size(); i++) rand_vector(i) = distribution(generator);
 
             return rand_vector;
         }

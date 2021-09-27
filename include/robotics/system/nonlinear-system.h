@@ -50,9 +50,7 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C)
-            : state_matrix(std::move(A)),
-              input_matrix(std::move(B)),
-              output_matrix(std::move(C))
+            : state_matrix(std::move(A)), input_matrix(std::move(B)), output_matrix(std::move(C))
         {
         }
 
@@ -64,16 +62,12 @@ namespace Robotics::Model {
          * @param R control weights matrix
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B)
-            : state_matrix(std::move(A)),
-              input_matrix(std::move(B))
+            : state_matrix(std::move(A)), input_matrix(std::move(B))
         {
         }
 
         // TODO: to be removed once automatic differentiation is implemented
-        void SetStateJacobian(f<SquareMatrix<StateSize>> J_F)
-        {
-            state_jacobian = std::move(J_F);
-        }
+        void SetStateJacobian(f<SquareMatrix<StateSize>> J_F) { state_jacobian = std::move(J_F); }
 
         // TODO: to be removed once automatic differentiation is implemented
         void SetOutputJacobian(f<Matrix<OutputSize, StateSize>> J_H)
@@ -99,7 +93,8 @@ namespace Robotics::Model {
             return state_jacobian(this->x, u, this->dt);
         }
 
-        OutputMatrix GetOutputJacobian(const Input& u) const {
+        OutputMatrix GetOutputJacobian(const Input& u) const
+        {
             return output_jacobian(this->x, u, this->dt);
         }
 
