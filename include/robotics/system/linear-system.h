@@ -66,11 +66,7 @@ namespace Robotics::Model {
          * @param target the target state
          * @return a vector containing the state along the whole path
          */
-        State PropagateDynamics(const State& x0, const Input& u)
-        {
-            this->x = this->A * x0 + this->B * u;
-            return this->x;
-        }
+        void PropagateDynamics(const Input& u) { this->x = this->A * this->x + this->B * u; }
     };
 
 }  // namespace Robotics::Model

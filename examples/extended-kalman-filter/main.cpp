@@ -25,6 +25,8 @@ int main()
     system.SetOutputJacobian(output_jacobian);
     system.SetTimeDiscretization(dt);
 
+    Robotics::Model::NonlinearSystem<N, M, P> dr_system = system;
+
     // State and observation covariance
     const SquareMatrix<N> Q = ColumnVector<N>(0.1, 0.1, deg2rad(1.0), 1.0).cwiseAbs2().asDiagonal();
     const SquareMatrix<P> R = ColumnVector<P>(1.0, 1.0).cwiseAbs2().asDiagonal();
@@ -70,7 +72,8 @@ int main()
         u = sample_input();
 
         // Compute the ideal new state
-        x_real = system.PropagateDynamics(x_real, u);
+        system.PropagateDynamics(u);
+        x_real = system.GetState();
 
         // Observe the ideal state through the measurement system
         z = system.GetNoisyMeasurement(gps_noise);
@@ -79,7 +82,8 @@ int main()
         u_noisy = u + input_disturbance * rand.GetColumnVector<M>();
 
         // Compute the new dead-reckoning state
-        x_dr = system.PropagateDynamics(x_dr, u_noisy);
+        dr_system.PropagateDynamics(u_noisy);
+        x_dr = dr_system.GetState();
 
         // New estimate
         x_estimated = filter.Update(x_estimated, z, u_noisy);

@@ -17,13 +17,13 @@ int main()
     const double m = 1.0, k = 20.0, b = 10.0;
 
     // PID parameters
-    const double Kp = 300, Ki = 1000, Kd = 0.1;
+    const double Kp = 1, Ki = 0, Kd = 0;
 
     const double dt = 0.1;
 
     // State-space formulation
     Robotics::SquareMatrix<N> A;
-    A << 0, 0, -k / m, -b / m;
+    A << 0, 1, -k / m, -b / m;
 
     Robotics::Matrix<N, M> B;
     B << 0, 1 / m;
@@ -46,10 +46,10 @@ int main()
     while (time <= sim_time) {
         time += dt;
         double position = system.GetOutput()(0);
-        double u = pid.ComputeControlAction(position, target);
+        Input u = Input(pid.ComputeControlAction(position, target));
         std::cout << "Current position: " << std::fixed << std::setprecision(20) << position << '\t'
                   << "Control action: " << u << '\n';
-        system.PropagateDynamics(system.GetState(), Input(u));
+        system.PropagateDynamics(u);
     }
 
     return 0;

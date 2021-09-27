@@ -26,7 +26,7 @@ namespace Robotics::Model {
          * @param target the target state
          * @return a vector containing the state along the whole path
          */
-        virtual State PropagateDynamics(const State& x0, const Input& u) = 0;
+        virtual void PropagateDynamics(const Input& u) = 0;
 
         void SetTimeDiscretization(double step) { dt = step; };
 

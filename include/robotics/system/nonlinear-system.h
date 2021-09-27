@@ -98,12 +98,11 @@ namespace Robotics::Model {
          * @param target the target state
          * @return a vector containing the state along the whole path
          */
-        State PropagateDynamics(const State& x0, const Input& u)
+        void PropagateDynamics(const Input& u)
         {
-            this->A = ComputeStateMatrix(x0);
-            this->B = ComputeInputMatrix(x0);
-            this->x = this->A * x0 + this->B * u;
-            return this->x;
+            this->A = ComputeStateMatrix(u);
+            this->B = ComputeInputMatrix(u);
+            this->x = this->A * this->x + this->B * u;
         }
 
         SquareMatrix<StateSize> GetJacobian(const Input& u) const
@@ -114,11 +113,14 @@ namespace Robotics::Model {
         const OutputMatrix& GetOutputMatrixJacobian() const { return J_H; }
 
       private:
-        StateMatrix ComputeStateMatrix(const State& x) const { return stateMatrixCallback(x); }
-
-        InputMatrix ComputeInputMatrix(const State& x) const
+        StateMatrix ComputeStateMatrix(const Input& u) const
         {
-            return InputMatrixCallback(x, this->dt);
+            return state_matrix(this->x, u, this->dt);
+        }
+
+        InputMatrix ComputeInputMatrix(const Input& u) const
+        {
+            return input_matrix(this->x, u, this->dt);
         }
 
         f<StateMatrix> state_matrix;
