@@ -5,7 +5,7 @@
 namespace Robotics::Model {
 
     /**
-     * @brief A class for implemeting an Extended Kalman Filter
+     * @brief A class for implementing a linear dynamical system
      */
     template <int StateSize, int InputSize, int OutputSize>
     class LinearSystem : public SystemBase<StateSize, InputSize, OutputSize> {
@@ -22,11 +22,11 @@ namespace Robotics::Model {
 
       public:
         /**
-         * @brief Creates a new LQR path planner
+         * @brief Creates a new linear system
          * @param A state matrix
          * @param B control matrix
-         * @param Q state weights matrix
-         * @param R control weights matrix
+         * @param C output matrix
+         * @param D feedthrough matrix
          */
         LinearSystem(StateMatrix A, InputMatrix B, OutputMatrix C, FeedthroughMatrix D)
         {
@@ -37,11 +37,9 @@ namespace Robotics::Model {
         }
 
         /**
-         * @brief Creates a new LQR path planner
+         * @brief Creates a new linear system
          * @param A state matrix
          * @param B control matrix
-         * @param Q state weights matrix
-         * @param R control weights matrix
          */
         LinearSystem(StateMatrix A, InputMatrix B, OutputMatrix C)
             : LinearSystem(A, B, C, FeedthroughMatrix::Zero())
@@ -49,22 +47,16 @@ namespace Robotics::Model {
         }
 
         /**
-         * @brief Creates a new LQR path planner
+         * @brief Creates a new linear system
          * @param A state matrix
          * @param B control matrix
-         * @param Q state weights matrix
-         * @param R control weights matrix
          */
         LinearSystem(StateMatrix A, InputMatrix B)
             : LinearSystem(A, B, OutputMatrix::Zero(), FeedthroughMatrix::Zero())
         {
         }
 
-        /**
-         * @brief Computes the optimal path to reach the target state
-         * @param initial the initial state
-         * @param target the target state
-         * @return a vector containing the state along the whole path
+        /** @copydoc SystemBase::PropagateDynamics(const Input&)
          */
         void PropagateDynamics(const Input& u) { this->x = this->A * this->x + this->B * u; }
     };

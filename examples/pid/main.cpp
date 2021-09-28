@@ -28,10 +28,10 @@ int main()
 
     Robotics::Model::LinearSystem<N, M, P> system(A, B, C);
     system.SetInitialState(Robotics::ColumnVector<N>(0.0));
-    system.SetTimeDiscretization(dt);
+    system.SetTimeStep(dt);
 
     Robotics::ClassicalControl::PID pid(Kp, Ki, Kd);
-    pid.SetTimeDiscretization(dt);
+    pid.SetTimeStep(dt);
     pid.SetControlActionLimits(-50.0, 50);
 
     const double target = 10.0;

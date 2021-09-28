@@ -3,7 +3,7 @@
   AccessModifierOffset: '-2'
   AlignTrailingComments: 'true'
   AllowAllParametersOfDeclarationOnNextLine: 'false'
-  AlwaysBreakTemplateDeclarations: 'false'
+  AlwaysBreakTemplateDeclarations: 'true'
   BreakBeforeBraces: Stroustrup
   ColumnLimit: '100'
   ConstructorInitializerAllOnOneLineOrOnePerLine: 'true'
