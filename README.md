@@ -14,7 +14,7 @@ A header-only, fully-templated C++ library for robotics algorithms.
 
 This repo is inspired by [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics). Instead of being just educational, this repo focuses on runtime speed and modularity. The `examples` folder contains short tutorials for each implemented algorithm.
 
-While this is still a work in progress, I would really appreciate it if you left any suggestion or just a star. Any help is greatly appreciated!
+While this is still a work in progress, I would appreciate it if you left any suggestions or just a star. Any help is greatly appreciated!
 
 * [Goal](#goal)
 * [Requirements](#requirements)
@@ -74,7 +74,7 @@ cmake --build build/EXAMPLE
 
 On Windows, this will default to a Debug configuration. To build the project in release mode, you can add `--config=Release` after the first command.
 
-To run the example on Linux, macOS and most Unix-based systems:
+To run the example on Linux, macOS, and most Unix-based systems:
 
 ```bash
 ./build/EXAMPLE/main
@@ -88,7 +88,7 @@ On Windows:
 
 where `CONFIG_TYPE` is either `Debug` or `Release`, depending on how you configured the project.
 
-### Using the library in your own projects
+### Using the library in your projects
 
 #### Importing the library
 
@@ -100,7 +100,7 @@ where `CONFIG_TYPE` is either `Debug` or `Release`, depending on how you configu
 
 `SystemBase` represents a generic dynamical system. In most cases, you will be using either a `LinearSystem` or `NonlinearSystem`.
 
-Since the library is templated, in order to define a system you need to define:
+Since the library is templated, to define a system you need to define:
 
 * The number of states
 
@@ -136,7 +136,7 @@ x' = A * x + B * u
 y  = C * x + D * u
 ```
 
-To setup a `LinearSystem`:
+To set up a `LinearSystem`:
 
 ```cpp
 StateMatrix A;
@@ -151,7 +151,7 @@ C << 1, 0,
      0, 1;
 ```
 
-Note that having templates not only improves runtime performance, but allows to carry out compile-time checks on the types you define. If you initialize some of the matrices above with the wrong number of elements, the compiler will throw an error.
+Note that having templates not only improves runtime performance but allows you to carry out compile-time checks on the types you define. If you initialize some of the matrices above with the wrong number of elements, the compiler will throw an error.
 
 Matrices C and D are not required: they will be null by default if not provided. In this case, D will be null.
 To define the system:
@@ -215,7 +215,7 @@ cmake --build build/doc --target GenerateDocs
 open build/doc/doxygen/html/index.html
 ```
 
-To build the documentation locally, you will need _Doxygen_, _jinja2_ and _Pygments_ installed your system.
+To build the documentation locally, you will need _Doxygen_, _jinja2_ and _Pygments_ installed in your system.
 
 ### Build everything at once
 
@@ -249,7 +249,7 @@ Sanitizers can be enabled by configuring CMake with `-DUSE_SANITIZER=<Address | 
 
 Static Analyzers can be enabled by setting `-DUSE_STATIC_ANALYZER=<clang-tidy | iwyu | cppcheck>`, or a combination of those in quotation marks, separated by semicolons.
 By default, analyzers will automatically find configuration files such as `.clang-format`.
-Additional arguments can be passed to the analyzers by setting the `CLANG_TIDY_ARGS`, `IWYU_ARGS` or `CPPCHECK_ARGS` variables.
+Additional arguments can be passed to the analyzers by setting the `CLANG_TIDY_ARGS`, `IWYU_ARGS`, or `CPPCHECK_ARGS` variables.
 
 #### Ccache
 
@@ -262,7 +262,7 @@ Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
 * [ ] Add more algorithms  
 * [ ] Add support for nonlinear systems automatic differentiation, so that the Jacobians are automatically computed (see [autodiff](https://autodiff.github.io/tutorials/))  
 * [ ] Add a README.md to each example folder, to explain the theory  
-* [ ] Cache the packages downloaded by CPM.CMake (currently everything is re-downloaded everytime a new example is built)
+* [ ] Cache the packages downloaded by CPM.CMake (currently everything is re-downloaded every time a new example is built)
 * [ ] Many more, feel free to add your ideas!
 
 ---
@@ -270,3 +270,5 @@ Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
 ## References
 
 As mentioned above, this repo was originally inspired by [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics). So go check it out if you want to see more algorithms (or if you want to help port a few of them!).
+
+
