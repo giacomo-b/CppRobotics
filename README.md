@@ -84,11 +84,11 @@ CppRobotics aims to be modular, which means:
 
 ### Building and running the examples
 
-Given a generic `EXAMPLE` that you want to run, the following commands build it:
+By default, example programs will be built. Use the `BUILD_EXAMPLES` option to disable them.
 
 ```bash
-cmake -S examples/EXAMPLE -B build/EXAMPLE
-cmake --build build/EXAMPLE
+cmake -B build
+cmake --build build
 ```
 
 On Windows, this will default to a Debug configuration. To build the project in release mode, you can add `--config=Release` after the first command.
@@ -96,13 +96,13 @@ On Windows, this will default to a Debug configuration. To build the project in 
 To run the example on Linux, macOS, and most Unix-based systems:
 
 ```bash
-./build/EXAMPLE/main
+./build/examples/main
 ```
 
 On Windows:
 
 ```bash
-./build/EXAMPLE/CONFIG_TYPE/main
+./build/examples/CONFIG_TYPE/main
 ```
 
 where `CONFIG_TYPE` is either `Debug` or `Release`, depending on how you configured the project.
@@ -193,15 +193,15 @@ Check out [TheLartians/ModernCppStarter](https://github.com/TheLartians/ModernCp
 
 ### Running tests
 
-From the root directory:
+By default, tests are built. Use the `BUILD_TESTING` option to disable them.
 
 ```bash
-cmake -S test -B build/test
-cmake --build build/test
-CTEST_OUTPUT_ON_FAILURE=1 cmake --build build/test --target test
+cmake -B build
+cmake --build build
+CTEST_OUTPUT_ON_FAILURE=1 cmake --build build --target test
 
 # or simply call the executable: 
-./build/test/RoboticsTests
+./build/tests/RoboticsTests
 ```
 
 To also collect code coverage information, run CMake with the `-DENABLE_TEST_COVERAGE=1` option.
@@ -211,13 +211,13 @@ To also collect code coverage information, run CMake with the `-DENABLE_TEST_COV
 This requires _clang-format_, _cmake-format_ and _pyyaml_ to be installed on the current system.
 
 ```bash
-cmake -S test -B build/test
+cmake -B build
 
 # view changes
-cmake --build build/test --target format
+cmake --build build --target format
 
 # apply changes
-cmake --build build/test --target fix-format
+cmake --build build --target fix-format
 ```
 
 See [Format.cmake](https://github.com/TheLartians/Format.cmake) for details.
@@ -228,32 +228,13 @@ The documentation is automatically built and [published](https://giacomo-b.githu
 To manually build documentation, call the following command.
 
 ```bash
-cmake -S documentation -B build/doc
-cmake --build build/doc --target GenerateDocs
+cmake -B build
+cmake --build build --target GenerateDocs
 # view the docs
 open build/doc/doxygen/html/index.html
 ```
 
 To build the documentation locally, you will need _Doxygen_, _jinja2_ and _Pygments_ installed in your system.
-
-### Build everything at once
-
-The project also includes an `all` directory that allows building all targets at the same time.
-This is useful during development, as it exposes all subprojects to your IDE and avoids redundant builds of the library.
-
-```bash
-cmake -S all -B build
-cmake --build build
-
-# run tests
-./build/test/RoboticsTests
-# format code
-cmake --build build --target fix-format
-# run standalone
-./build/standalone/Robotics --help
-# build docs
-cmake --build build --target GenerateDocs
-```
 
 ### Additional tools
 

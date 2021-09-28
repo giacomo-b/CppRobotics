@@ -1,24 +1,17 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+option(BUILD_DOCS "Build the documentation" ON)
 
-project(RoboticsDocs)
-
-# ---- Dependencies ----
-
-include(../cmake/CPM.cmake)
+if(NOT BUILD_DOCS)
+  return()
+endif()
 
 CPMAddPackage("gh:mosra/m.css#42d4a9a48f31f5df6e246c948403b54b50574a2a")
-CPMAddPackage(NAME Robotics SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 
-# ---- Doxygen variables ----
-
-# set Doxyfile variables
 set(DOXYGEN_PROJECT_NAME Robotics)
 set(DOXYGEN_PROJECT_VERSION ${Robotics_VERSION})
 set(DOXYGEN_PROJECT_ROOT "${CMAKE_CURRENT_LIST_DIR}/..")
 set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/doxygen")
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
 configure_file(${CMAKE_CURRENT_LIST_DIR}/conf.py ${CMAKE_CURRENT_BINARY_DIR}/conf.py)
 
 add_custom_target(

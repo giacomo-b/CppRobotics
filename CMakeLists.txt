@@ -1,18 +1,9 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
-
-# ---- Project ----
-
-# Note: update this to your new project's name and version
+cmake_minimum_required(VERSION 3.14)
 project(
   Robotics
   VERSION 1.0
   LANGUAGES CXX
 )
-
-# FIXME: doesn't seem to be caching packages
-add_compile_definitions(CPM_SOURCE_CACHE="${CMAKE_CURRENT_LIST_DIR}/build/cache/CPM")
-
-# ---- Include guards ----
 
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   message(
@@ -21,13 +12,11 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   )
 endif()
 
-# ---- Add dependencies via CPM ----
-# see https://github.com/TheLartians/CPM.cmake for more info
-
+include(cmake/tools.cmake)
 include(cmake/CPM.cmake)
 
-# PackageProject.cmake will be used to make our target installable
-CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.6.0")
+# FIXME: doesn't seem to be caching packages
+add_compile_definitions(CPM_SOURCE_CACHE="${CMAKE_BINARY_DIR}/cache/CPM")
 
 CPMAddPackage(
   NAME Eigen3
@@ -37,38 +26,18 @@ CPMAddPackage(
   # not intended for library use
   DOWNLOAD_ONLY YES
 )
-
-if(Eigen3_ADDED)
-  add_library(Eigen3 INTERFACE IMPORTED)
-  target_include_directories(Eigen3 INTERFACE ${Eigen3_SOURCE_DIR})
-endif()
-
-# ---- Add source files ----
-
-# Note: globbing sources is considered bad practice as CMake's generators may not detect new files
-# automatically. Keep that in mind when changing files, or explicitly mention them here.
-file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
-
-# ---- Create library ----
+add_library(Eigen3::Eigen INTERFACE IMPORTED)
+target_include_directories(Eigen3::Eigen INTERFACE ${Eigen3_SOURCE_DIR})
 
 add_library(Robotics INTERFACE)
-
-# being a cross-platform target, we enforce standards conformance on MSVC
-target_compile_options(Robotics INTERFACE "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
-
-# Link dependencies
-target_link_libraries(Robotics INTERFACE Eigen3)
-
 target_include_directories(
   Robotics INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                      $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
+target_link_libraries(Robotics INTERFACE Eigen3::Eigen)
+target_compile_features(Robotics INTERFACE cxx_std_17)
 
-# ---- Create an installable target ----
-# this allows users to install and find the library via `find_package()`.
-
-# the location where the project's version header will be placed should match the project's regular
-# header paths
+CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.6.0")
 string(TOLOWER ${PROJECT_NAME}/version.h VERSION_HEADER_LOCATION)
 
 packageProject(
@@ -82,3 +51,12 @@ packageProject(
   COMPATIBILITY SameMajorVersion
   DEPENDENCIES "Eigen3 3.3.9"
 )
+
+if(NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+  return()
+endif()
+
+include(CTest)
+add_subdirectory(documentation)
+add_subdirectory(examples)
+add_subdirectory(tests)
