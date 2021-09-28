@@ -8,7 +8,7 @@
 namespace Robotics::Model {
 
     /**
-     * @brief A class for implemeting an Extended Kalman Filter
+     * @brief A class for implementing a nonlinear dynamical system
      */
     template <int StateSize, int InputSize, int OutputSize>
     class NonlinearSystem : public SystemBase<StateSize, InputSize, OutputSize> {
@@ -23,15 +23,16 @@ namespace Robotics::Model {
         using OutputMatrix = typename System::OutputMatrix;
         using FeedthroughMatrix = typename System::FeedthroughMatrix;
 
-        template <typename T> using f = std::function<T(const State&, const Input&, double)>;
+        template <typename T>
+        using f = std::function<T(const State&, const Input&, double)>;
 
       public:
         /**
-         * @brief Creates a new LQR path planner
-         * @param A state matrix
-         * @param B control matrix
-         * @param Q state weights matrix
-         * @param R control weights matrix
+         * @brief Creates a new nonlinear system
+         * @param A state matrix as a function of (x, u, dt)
+         * @param B control matrix as a function of (x, u, dt)
+         * @param C output matrix as a function of (x, u, dt)
+         * @param D feedthrough matrix as a function of (x, u, dt)
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C,
                         f<FeedthroughMatrix> D)
@@ -43,11 +44,10 @@ namespace Robotics::Model {
         }
 
         /**
-         * @brief Creates a new LQR path planner
-         * @param A state matrix
-         * @param B control matrix
-         * @param Q state weights matrix
-         * @param R control weights matrix
+         * @brief Creates a new nonlinear system
+         * @param A state matrix as a function of (x, u, dt)
+         * @param B control matrix as a function of (x, u, dt)
+         * @param C output matrix as a function of (x, u, dt)
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B, f<OutputMatrix> C)
             : state_matrix(std::move(A)), input_matrix(std::move(B)), output_matrix(std::move(C))
@@ -55,31 +55,35 @@ namespace Robotics::Model {
         }
 
         /**
-         * @brief Creates a new LQR path planner
-         * @param A state matrix
-         * @param B control matrix
-         * @param Q state weights matrix
-         * @param R control weights matrix
+         * @brief Creates a new nonlinear system
+         * @param A state matrix as a function of (x, u, dt)
+         * @param B control matrix as a function of (x, u, dt)
          */
         NonlinearSystem(f<StateMatrix> A, f<InputMatrix> B)
             : state_matrix(std::move(A)), input_matrix(std::move(B))
         {
         }
 
-        // TODO: to be removed once automatic differentiation is implemented
+        /**
+         * @brief Sets an expression for the state Jacobian
+         * @param J_F state jacobian as a function of (x, u, dt)
+         * @todo remove once automatic differentiation is implemented
+         * @todo add nullptr check and handling
+         */
         void SetStateJacobian(f<SquareMatrix<StateSize>> J_F) { state_jacobian = std::move(J_F); }
 
-        // TODO: to be removed once automatic differentiation is implemented
+        /**
+         * @brief Sets an expression for the output Jacobian
+         * @param J_H output jacobian as a function of (x, u, dt)
+         * @todo remove once automatic differentiation is implemented
+         * @todo add nullptr check and handling
+         */
         void SetOutputJacobian(f<Matrix<OutputSize, StateSize>> J_H)
         {
             output_jacobian = std::move(J_H);
         }
 
-        /**
-         * @brief Computes the optimal path to reach the target state
-         * @param initial the initial state
-         * @param target the target state
-         * @return a vector containing the state along the whole path
+        /** @copydoc SystemBase::PropagateDynamics(const Input&)
          */
         void PropagateDynamics(const Input& u)
         {
@@ -88,11 +92,21 @@ namespace Robotics::Model {
             this->x = this->A * this->x + this->B * u;
         }
 
+        /**
+         * @brief Gets the state Jacobian
+         * @param u system input
+         * @return the state Jacobian
+         */
         SquareMatrix<StateSize> GetStateJacobian(const Input& u) const
         {
             return state_jacobian(this->x, u, this->dt);
         }
 
+        /**
+         * @brief Gets the output Jacobian
+         * @param u system input
+         * @return the output Jacobian
+         */
         OutputMatrix GetOutputJacobian(const Input& u) const
         {
             return output_jacobian(this->x, u, this->dt);

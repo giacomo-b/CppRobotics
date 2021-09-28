@@ -10,9 +10,11 @@
 namespace Robotics::LinearControl {
 
     /**
-     * @brief A class for path planning using a Linear Quadratic Regulator
+     * @brief A class for implementing a Linear-Quadratic Regulator
+     * @todo: Refactor class to conform to the other controllers
      */
-    template <int N, int M> class LQR {
+    template <int N, int M>
+    class LQR {
         using VectorNx1 = ColumnVector<N>;
         using VectorMx1 = ColumnVector<M>;
 
@@ -25,11 +27,12 @@ namespace Robotics::LinearControl {
 
       public:
         /**
-         * @brief Creates a new LQR path planner
+         * @brief Creates a new Linear-Quadratic Regulator
          * @param A state matrix
          * @param B control matrix
          * @param Q state weights matrix
          * @param R control weights matrix
+         * @todo pass a linear system as input
          */
         LQR(MatrixNxN A, InputMatrix B, MatrixNxN Q, MatrixMxM R)
             : A(A), B(B), Q(Q), R(R), K(ComputeGain())
@@ -37,10 +40,12 @@ namespace Robotics::LinearControl {
         }
 
         /**
-         * @brief Computes the optimal path to reach the target state
+         * @brief Solves the LQR problem
          * @param initial the initial state
          * @param target the target state
          * @return a vector containing the state along the whole path
+         * @todo this behavior should be in a user-defined loop, refactor so that only one step is
+         * carried out at a time
          */
         std::vector<State> Solve(State initial, State target)
         {
@@ -77,10 +82,37 @@ namespace Robotics::LinearControl {
             return path;
         }
 
+        /**
+         * @brief Sets the maximum simulation time
+         * @param limit time limit
+         * @todo remove
+         */
         void SetTimeLimit(double limit) { max_time = limit; }
+
+        /**
+         * @brief Sets the simulation time step
+         * @param step time step
+         */
         void SetTimeStep(double step) { dt = step; }
+
+        /**
+         * @brief Sets the tolerance w.r.t. the target
+         * @param tol tolerance
+         * @todo remove, the user should decide when to exit
+         */
         void SetFinalPositionTolerance(double tol) { goal_dist = tol; }
+
+        /**
+         * @brief Sets the maximum number of iterations
+         * @param limit maximum number of iterations
+         * @todo remove, the user should decide when to exit
+         */
         void SetIterationsLimit(int limit) { max_iter = limit; }
+
+        /**
+         * @brief Sets the tolerance for the resolution of the Discrete Algebraic Riccati Equation
+         * @param tol tolerance
+         */
         void SetDARETolerance(double tol) { eps = tol; }
 
       private:

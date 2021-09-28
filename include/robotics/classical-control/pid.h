@@ -6,6 +6,9 @@
 #include <cmath>
 
 namespace Robotics::ClassicalControl {
+    /**
+     * @brief A class for implemeting a Proportional-Integral-Derivative controller
+     */
     class PID {
       public:
         /**
@@ -16,10 +19,25 @@ namespace Robotics::ClassicalControl {
          */
         PID(double Kp, double Ki, double Kd) : Kp(Kp), Ki(Ki), Kd(Kd) {}
 
+        /**
+         * @brief Computes the feedback control action
+         * @param current current state
+         * @param target target value
+         * @return the computed control action
+         */
         double ComputeControlAction(double current, double target);
 
-        void SetTimeDiscretization(double step) { dt = step; }
+        /**
+         * @brief Sets the time step used to propagate the dynamics
+         * @param step desired time step
+         */
+        void SetTimeStep(double step) { dt = step; }
 
+        /**
+         * @brief Sets a lower and upper bound for the control action
+         * @param min minimum control action
+         * @param max maximum control action
+         */
         void SetControlActionLimits(double min, double max)
         {
             is_limited = true;

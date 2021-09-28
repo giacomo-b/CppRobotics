@@ -23,11 +23,11 @@ int main()
     Robotics::Model::NonlinearSystem<N, M, P> system(A, B, C);
     system.SetStateJacobian(state_jacobian);
     system.SetOutputJacobian(output_jacobian);
-    system.SetTimeDiscretization(dt);
+    system.SetTimeStep(dt);
 
     Robotics::Model::NonlinearSystem<N, M, P> dr_system = system;
 
-    // State and observation covariance
+    // State and output covariance
     const SquareMatrix<N> Q = ColumnVector<N>(0.1, 0.1, deg2rad(1.0), 1.0).cwiseAbs2().asDiagonal();
     const SquareMatrix<P> R = ColumnVector<P>(1.0, 1.0).cwiseAbs2().asDiagonal();
 
