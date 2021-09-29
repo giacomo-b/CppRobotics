@@ -1,39 +1,58 @@
-[![Actions Status](https://github.com/giacomo-b/CppRobotics/workflows/MacOS/badge.svg)](https://github.com/giacomo/CppRobotics/actions)
-[![Actions Status](https://github.com/giacomo-b/CppRobotics/workflows/Windows/badge.svg)](https://github.com/giacomo/CppRobotics/actions)
-[![Actions Status](https://github.com/giacomo-b/CppRobotics/workflows/Ubuntu/badge.svg)](https://github.com/giacomo/CppRobotics/actions)
-[![Actions Status](https://github.com/giacomo-b/CppRobotics/workflows/Style/badge.svg)](https://github.com/giacomo/CppRobotics/actions)
-![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/giacomo-b/cpprobotics/master)
-[![](https://tokei.rs/b1/github/XAMPPRocky/tokei)](https://github.com/XAMPPRocky/tokei).
+<h1 align="center">
+  <a href="https://github.com/giacomo-b/CppRobotics"><img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="CppRobotics" width="200"></a>
+  <br>
+  C++ Robotics
+</h1>
+<h4 align="center">A header-only, fully-templated C++ library for control algorithms.</h4>
+<p align="center">
+  <a href="https://github.com/giacomo-b/CppRobotics/actions">
+    <img src="https://github.com/giacomo-b/CppRobotics/workflows/MacOS/badge.svg"
+         alt="MacOS">
+  </a>
+  <a href="https://github.com/giacomo-b/CppRobotics/actions">
+    <img src="https://github.com/giacomo-b/CppRobotics/workflows/Windows/badge.svg"
+         alt="Windows">
+  </a>
+  <a href="https://github.com/giacomo-b/CppRobotics/actions">
+    <img src="https://github.com/giacomo-b/CppRobotics/workflows/Ubuntu/badge.svg"
+         alt="Ubuntu">
+  </a>
+  <a href="https://github.com/giacomo-b/CppRobotics/actions">
+    <img src="https://github.com/giacomo-b/CppRobotics/workflows/Style/badge.svg"
+         alt="Style">
+  </a>
+  <a href="https://github.com/giacomo-b/CppRobotics">
+    <img src="https://img.shields.io/codefactor/grade/github/giacomo-b/cpprobotics/master"
+         alt="CodeFactor">
+  </a>
+  <a href="https://github.com/giacomo-b/CppRobotics">
+    <img src="https://tokei.rs/b1/github/XAMPPRocky/tokei"
+         alt="Tokei">
+  </a>
+</p>
 <!-- [![codecov](https://codecov.io/gh/giacomo-b/CppRobotics/branch/master/graph/badge.svg)](https://codecov.io/gh/giacomo-b/CppRobotics) -->
 
-<img src="https://repository-images.githubusercontent.com/254842585/4dfa7580-7ffb-11ea-99d0-46b8fe2f4170" align="right" width="300" alt="header pic"/>
-
-# CppRobotics
-
-A header-only, fully-templated C++ library for robotics algorithms.
-
-This repo is inspired by [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics). Instead of being just educational, this repo focuses on runtime speed and modularity. The `examples` folder contains short tutorials for each implemented algorithm.
-
-While this is still a work in progress, I would appreciate it if you left any suggestions or just a star. Any help is greatly appreciated!
-
-* [Goal](#goal)
-* [Requirements](#requirements)
-* [Getting started](#getting-started)
-* [Development features](#development-features)
-* [TODOs](#todos)
-* [References](#references)
+<p align="center">
+  <a href="#goals">Goals</a> •
+  <a href="#requirements">Requirements</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#features">Features</a> •
+  <a href="#todos">TODOs</a> •
+  <a href="#references">References</a>
+</p>
 
 ---
+## Goals
 
-## Goal
+C++ Robotics has the following goals:
 
-The main goal for this library is to:
+* Implement as many robotics algorithms as possible, without sacrificing quality. These include, e.g., control, path planning, and estimation algorithms.  
+* Be easy to use and to get started with, thus the header-only format and minimal external dependencies.  
+* Be fast: by making use of templates, most algorithms use static-size data structures whose size is known at compilation time.  
 
-1. Implement as many robotics algorithms as possible, without sacrificing quality. These include, e.g., control, path planning, and estimation algorithms.
+This project is inspired by [PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics). Instead of being just an educational repo, this library aims at implementing fast algorithms with a consistent API, to guarantee runtime performance and ease of use.
 
-2. Be easy to use and to get started with, thus the header-only and minimal external dependencies.
-
-3. Be fast: by making use of templates and by relying on `Eigen`, most algorithms use static-size data structures known at compilation time.
+While this is still a work in progress, I would appreciate it if you left any suggestions or starred the repo. Any help is greatly appreciated!
 
 ---
 
@@ -168,7 +187,7 @@ system.SetInitialState(State(1.0, -1.0));
 
 ---
 
-## Development features
+## Features
 
 Check out [TheLartians/ModernCppStarter](https://github.com/TheLartians/ModernCppStarter) if you want to include these features in your project.
 
@@ -270,5 +289,4 @@ Ccache can be enabled by configuring with `-DUSE_CCACHE=<ON | OFF>`.
 ## References
 
 As mentioned above, this repo was originally inspired by [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics). So go check it out if you want to see more algorithms (or if you want to help port a few of them!).
-
 
