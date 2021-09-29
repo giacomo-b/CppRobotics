@@ -170,9 +170,9 @@ C << 1, 0,
      0, 1;
 ```
 
-Note that having templates not only improves runtime performance but allows you to carry out compile-time checks on the types you define. If you initialize some of the matrices above with the wrong number of elements, the compiler will throw an error.
+Note that having templates not only improves runtime performance, but also enforces compile-time checking. If you initialize a matrix with the wrong number of elements, the code will not compile.
 
-Matrices C and D are not required: they will be null by default if not provided. In this case, D will be null.
+Matrices C and D are not required: they are null by default if not provided. In this case, D is null.
 To define the system:
 
 ```cpp
