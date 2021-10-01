@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/giacomo-b/CppRobotics"><img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="CppRobotics" width="200"></a>
+  <a href="https://github.com/giacomo-b/CppRobotics"><img src="https://github.com/giacomo-b/CppRobotics/blob/master/documentation/logo.png" alt="CppRobotics" width="300"></a>
   <br>
   C++ Robotics
 </h1>
