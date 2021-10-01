@@ -85,28 +85,17 @@ namespace Robotics::Polynomial{
                            const std::size_t& interpolation_size)
     : m_x(x), m_y(y)
   {
-      std::cout << "Constructed\n";
       assert(m_x.size() == m_y.size());
       n_points = m_y.size() - 1;
-      std::cout << "Reserving Memory\n";
       reserveMemoryForAllVector();
-      std::cout << "Compute constant A\n";
       computeConstantA();
-      std::cout << "Run Adjacent Difference for x\n";
       adjacentDiff(m_x, m_dx);
-      std::cout << "Run Adjacent Difference for y\n";
       adjacentDiff(m_y, m_dy);
-      std::cout << "Compute dy/dx\n";
       computeDyDx();
-      std::cout << "Compute constant C\n";
       computeConstantC();
-      std::cout << "Compute constant B\n";
       computeConstantB();
-      std::cout << "Compute constant D\n";
       computeConstantD();
-      std::cout << "get SplineSet\n";
       outputSplineSet();
-      std::cout << "get linspace\n";
       
       m_interval = linspace(m_x.front(), m_x.back(), interpolation_size);
       computeAllConstants();
