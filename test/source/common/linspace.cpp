@@ -5,7 +5,6 @@ using namespace Robotics;
 
 TEST_CASE("Linspace_integer")
 {
-
   constexpr int a {0};
   constexpr int b {10};
   constexpr std::size_t N {11};

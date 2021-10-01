@@ -156,7 +156,6 @@ namespace Robotics::Polynomial{
 
   void CubicSpline::computeConstantC()
   {
-
     // Compute matrix A
     Eigen::MatrixXf A = Eigen::MatrixXf::Zero(n_points + 1, n_points + 1);
     A(0, 0) = 1.0;
