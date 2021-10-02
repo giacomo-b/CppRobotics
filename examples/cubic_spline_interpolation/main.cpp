@@ -1,11 +1,12 @@
-#include <robotics/robotics.h>
 #include <matplot/matplot.h>
+#include <robotics/robotics.h>
 
-int main(){
-    std::vector<double> x {-2.5, 0.0, 2.5, 5.0, 7.5, 3.0, -1.0};
-    std::vector<double> y {0.7, -6, 5, 6.5, 0.0, 5.0, -2.0};
+int main()
+{
+    std::vector<double> x{-2.5, 0.0, 2.5, 5.0, 7.5, 3.0, -1.0};
+    std::vector<double> y{0.7, -6, 5, 6.5, 0.0, 5.0, -2.0};
 
-    constexpr std::size_t interpolation_size {101};
+    constexpr std::size_t interpolation_size{101};
     Robotics::Polynomial::CubicSpline2D ccspline(x, y, interpolation_size);
 
     auto r2x = ccspline.getx_pos();
@@ -22,7 +23,7 @@ int main(){
     auto yaw_plot = matplot::plot(ccspline.getInterval(), ccspline.getyaw());
     matplot::hold(matplot::on);
     matplot::show();
-    
+
     matplot::cla();
     auto curvature_plot = matplot::plot(ccspline.getInterval(), ccspline.getCurvature());
     matplot::hold(matplot::on);

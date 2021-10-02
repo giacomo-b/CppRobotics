@@ -14,7 +14,7 @@ CPMAddPackage(
   NAME matplotplusplus
   GITHUB_REPOSITORY alandefreitas/matplotplusplus
   GIT_TAG origin/master
-  )
+)
 
 CPMAddPackage(NAME Robotics SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
 
