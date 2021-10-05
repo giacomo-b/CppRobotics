@@ -12,15 +12,15 @@ namespace Robotics::LinearControl {
      * @brief A class for implementing a Linear-Quadratic Regulator
      * @todo: Refactor class to conform to the other controllers
      */
-    template <int N, int M>
+    template <int StateSize, int InputSize>
     class LQR {
-        using VectorNx1 = ColumnVector<N>;
-        using VectorMx1 = ColumnVector<M>;
+        using VectorNx1 = ColumnVector<StateSize>;
+        using VectorMx1 = ColumnVector<InputSize>;
 
-        using MatrixNxN = SquareMatrix<N>;
-        using MatrixMxM = SquareMatrix<M>;
-        using InputMatrix = Matrix<N, M>;
-        using GainMatrix = Matrix<M, N>;
+        using MatrixNxN = SquareMatrix<StateSize>;
+        using MatrixMxM = SquareMatrix<InputSize>;
+        using InputMatrix = Matrix<StateSize, InputSize>;
+        using GainMatrix = Matrix<InputSize, StateSize>;
 
         using State = VectorNx1;
 
