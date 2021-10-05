@@ -29,8 +29,14 @@ jobs:
       - name: build
         run: cmake --build build -j4
 
-      - name: run
+      - name: run-ekf
         run: ./build/ekf/main
+
+      - name: run-lqr
         run: ./build/lqr/main
+
+      - name: run-lqr-plot
         run: ./build/lqr_plot/main
+
+      - name: run-pid
         run: ./build/pid/main
