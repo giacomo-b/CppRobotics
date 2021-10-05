@@ -1,10 +1,9 @@
 #pragma once
 
-#include <robotics/common.h>
-#include <robotics/system/nonlinear-system.h>
-
 #include <Eigen/Dense>
 #include <cmath>
+#include <robotics/common.hpp>
+#include <robotics/system/nonlinear_system.hpp>
 #include <vector>
 
 namespace Robotics::Estimation {
@@ -39,21 +38,21 @@ namespace Robotics::Estimation {
          * @param u control input
          * @return the updated state estimate
          */
-        State Update(State previous_estimate, Measurement z, Input u)
+        State Update(State, Measurement z, Input u, double dt)
         {
             // Predicted state estimate
-            system.PropagateDynamics(u);
+            system.PropagateDynamics(u, dt);
             x_predicted = system.GetState();
 
             // Predicted covariance estimate
-            SquareMatrix<StateSize> J_F = system.GetStateJacobian(u);
+            SquareMatrix<StateSize> J_F = system.GetStateJacobian(u, dt);
             P_predicted = J_F * P_estimate * J_F.transpose() + Q;
 
             // Update
             z_predicted = system.GetOutputMatrix() * x_predicted;
             residual = z - z_predicted;
 
-            const Matrix<OutputSize, StateSize> J_H = system.GetOutputJacobian(u);
+            const Matrix<OutputSize, StateSize> J_H = system.GetOutputJacobian(u, dt);
             S = J_H * P_predicted * J_H.transpose() + R;
             K = P_predicted * J_H.transpose() * S.inverse();
             x_estimate = x_predicted + K * residual;
@@ -62,16 +61,8 @@ namespace Robotics::Estimation {
             return x_estimate;
         }
 
-        /**
-         * @brief Sets the time step used to propagate the dynamics
-         * @param step desired time step
-         */
-        void SetTimeStep(double step) { dt = step; }
-
       private:
         NonlinearSystem system;
-
-        double dt{0.1};
 
         SquareMatrix<StateSize> P_predicted, P_estimate;
         SquareMatrix<OutputSize> S;

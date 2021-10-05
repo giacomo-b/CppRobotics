@@ -1,11 +1,11 @@
 #include <matplot/matplot.h>
-#include <robotics/robotics.h>
 
 #include <chrono>
 #include <iomanip>
 #include <iostream>
+#include <robotics/robotics.hpp>
 
-#include "dynamics.h"
+#include "dynamics.hpp"
 
 Input sample_input();
 
@@ -23,7 +23,6 @@ int main()
     Robotics::Model::NonlinearSystem<N, M, P> system(A, B, C);
     system.SetStateJacobian(state_jacobian);
     system.SetOutputJacobian(output_jacobian);
-    system.SetTimeStep(dt);
 
     Robotics::Model::NonlinearSystem<N, M, P> dr_system = system;
 
@@ -59,7 +58,6 @@ int main()
     measurements.push_back(z);
 
     Robotics::Estimation::EKF<N, M, P> filter(system, Q, R);
-    filter.SetTimeStep(dt);
 
     Input u, u_noisy;
     Robotics::NormalDistributionRandomGenerator rand;
@@ -73,7 +71,7 @@ int main()
         u = sample_input();
 
         // Compute the ideal new state
-        system.PropagateDynamics(u);
+        system.PropagateDynamics(u, dt);
         x_real = system.GetState();
 
         // Observe the ideal state through the measurement system
@@ -83,11 +81,11 @@ int main()
         u_noisy = u + input_disturbance * rand.GetColumnVector<M>();
 
         // Compute the new dead-reckoning state
-        dr_system.PropagateDynamics(u_noisy);
+        dr_system.PropagateDynamics(u_noisy, dt);
         x_dr = dr_system.GetState();
 
         // New estimate
-        x_estimated = filter.Update(x_estimated, z, u_noisy);
+        x_estimated = filter.Update(x_estimated, z, u_noisy, dt);
 
         ekf_history.push_back(x_estimated);
         real_history.push_back(x_real);

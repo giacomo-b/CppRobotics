@@ -1,9 +1,8 @@
 #pragma once
 
-#include <robotics/system/system-base.h>
-
 #include <cmath>
 #include <functional>
+#include <robotics/system/system_base.hpp>
 
 namespace Robotics::Model {
 
@@ -85,10 +84,10 @@ namespace Robotics::Model {
 
         /** @copydoc SystemBase::PropagateDynamics(const Input&)
          */
-        void PropagateDynamics(const Input& u)
+        void PropagateDynamics(const Input& u, double dt)
         {
-            this->A = ComputeStateMatrix(u);
-            this->B = ComputeInputMatrix(u);
+            this->A = ComputeStateMatrix(u, dt);
+            this->B = ComputeInputMatrix(u, dt);
             this->x = this->A * this->x + this->B * u;
         }
 
@@ -97,9 +96,9 @@ namespace Robotics::Model {
          * @param u system input
          * @return the state Jacobian
          */
-        SquareMatrix<StateSize> GetStateJacobian(const Input& u) const
+        SquareMatrix<StateSize> GetStateJacobian(const Input& u, double dt) const
         {
-            return state_jacobian(this->x, u, this->dt);
+            return state_jacobian(this->x, u, dt);
         }
 
         /**
@@ -107,20 +106,20 @@ namespace Robotics::Model {
          * @param u system input
          * @return the output Jacobian
          */
-        OutputMatrix GetOutputJacobian(const Input& u) const
+        OutputMatrix GetOutputJacobian(const Input& u, double dt) const
         {
-            return output_jacobian(this->x, u, this->dt);
+            return output_jacobian(this->x, u, dt);
         }
 
       private:
-        StateMatrix ComputeStateMatrix(const Input& u) const
+        StateMatrix ComputeStateMatrix(const Input& u, double dt) const
         {
-            return state_matrix(this->x, u, this->dt);
+            return state_matrix(this->x, u, dt);
         }
 
-        InputMatrix ComputeInputMatrix(const Input& u) const
+        InputMatrix ComputeInputMatrix(const Input& u, double dt) const
         {
-            return input_matrix(this->x, u, this->dt);
+            return input_matrix(this->x, u, dt);
         }
 
         f<StateMatrix> state_matrix;

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <robotics/common.h>
-
 #include <Eigen/Dense>
+#include <robotics/common.hpp>
 
 namespace Robotics::Model {
 
@@ -26,13 +25,7 @@ namespace Robotics::Model {
          * @brief Propagates the state for one time step
          * @param u system input
          */
-        virtual void PropagateDynamics(const Input& u) = 0;
-
-        /**
-         * @brief Sets the time step used to propagate the dynamics
-         * @param step desired time step
-         */
-        void SetTimeStep(double step) { dt = step; };
+        virtual void PropagateDynamics(const Input& u, double dt) = 0;
 
         /**
          * @brief Updates the internal state of the system, which will become the new initial
@@ -74,7 +67,6 @@ namespace Robotics::Model {
         }
 
       protected:
-        double dt{0.1};
         State x{State::Zero()};
         Output y{Output::Zero()};
 
