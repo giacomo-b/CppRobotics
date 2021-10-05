@@ -39,7 +39,7 @@ namespace Robotics::Estimation {
          * @param u control input
          * @return the updated state estimate
          */
-        State Update(State previous_estimate, Measurement z, Input u)
+        State Update(State, Measurement z, Input u)
         {
             // Predicted state estimate
             system.PropagateDynamics(u);
