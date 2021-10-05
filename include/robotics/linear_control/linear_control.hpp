@@ -1,3 +1,3 @@
 #pragma once
 
-#include <robotics/linear_control/linear_quadratic_regulator.hpp>
+#include <robotics/linear_control/lqr.hpp>
