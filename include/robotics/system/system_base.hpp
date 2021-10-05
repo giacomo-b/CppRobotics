@@ -11,6 +11,10 @@ namespace Robotics::Model {
      */
     template <int StateSize, int InputSize, int OutputSize>
     class SystemBase {
+        static_assert(StateSize > 0);
+        static_assert(InputSize > 0);
+        static_assert(OutputSize > 0);
+
       public:
         using State = ColumnVector<StateSize>;
         using Input = ColumnVector<InputSize>;

@@ -13,6 +13,10 @@ namespace Robotics::Estimation {
      */
     template <int StateSize, int InputSize, int OutputSize>
     class EKF {
+        static_assert(StateSize > 0);
+        static_assert(InputSize > 0);
+        static_assert(OutputSize > 0);
+
         using State = ColumnVector<StateSize>;
         using Input = ColumnVector<InputSize>;
         using Measurement = ColumnVector<OutputSize>;
