@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <functional>
-#include <robotics/system/system-base.hpp>
+#include <robotics/system/system_base.hpp>
 
 namespace Robotics::Model {
 

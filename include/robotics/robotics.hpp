@@ -4,8 +4,8 @@
 #    define _USE_MATH_DEFINES
 #endif
 
-#include <robotics/classical-control/classical-control.hpp>
+#include <robotics/classical_control/classical_control.hpp>
 #include <robotics/common.hpp>
 #include <robotics/estimation/estimation.hpp>
-#include <robotics/linear-control/linear-control.hpp>
+#include <robotics/linear_control/linear_control.hpp>
 #include <robotics/system/system.hpp>

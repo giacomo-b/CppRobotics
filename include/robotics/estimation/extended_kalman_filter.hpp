@@ -3,7 +3,7 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include <robotics/common.hpp>
-#include <robotics/system/nonlinear-system.hpp>
+#include <robotics/system/nonlinear_system.hpp>
 #include <vector>
 
 namespace Robotics::Estimation {

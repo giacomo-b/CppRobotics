@@ -1,7 +1,7 @@
 #include <doctest/doctest.h>
 
 #include <Eigen/Dense>
-#include <robotics/linear-control/linear-quadratic-regulator.hpp>
+#include <robotics/linear_control/linear_quadratic_regulator.hpp>
 #include <string>
 
 TEST_CASE("Robotics")
