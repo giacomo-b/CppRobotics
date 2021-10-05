@@ -27,10 +27,8 @@ int main()
 
     Robotics::Model::LinearSystem<N, M, P> system(A, B, C);
     system.SetInitialState(Robotics::ColumnVector<N>(0.0));
-    system.SetTimeStep(dt);
 
     Robotics::ClassicalControl::PID pid(Kp, Ki, Kd);
-    pid.SetTimeStep(dt);
     pid.SetControlActionLimits(-50.0, 50);
 
     const double target = 10.0;
@@ -40,10 +38,10 @@ int main()
     while (time <= sim_time) {
         time += dt;
         double position = system.GetOutput()(0);
-        Input u = Input(pid.ComputeControlAction(position, target));
+        Input u = Input(pid.ComputeControlAction(position, target, dt));
         std::cout << "Current position: " << std::fixed << std::setprecision(20) << position << '\t'
                   << "Control action: " << u << '\n';
-        system.PropagateDynamics(u);
+        system.PropagateDynamics(u, dt);
     }
 
     return 0;

@@ -23,7 +23,6 @@ int main()
     Robotics::SquareMatrix<M> R = Robotics::SquareMatrix<M>::Identity();
 
     Robotics::LinearControl::LQR<N, M> lqr_planner(A, B, Q, R);
-    lqr_planner.SetTimeStep(dt);
 
     const int n_test = 10;
     const double area = 100.0;
@@ -40,7 +39,7 @@ int main()
         std::cout << "Goal: (" << target(0) << ", " << target(1) << "), ";
         auto t_start = std::chrono::high_resolution_clock::now();
 
-        auto path = lqr_planner.Solve(start, target);
+        auto path = lqr_planner.Solve(start, target, dt);
 
         auto t_end = std::chrono::high_resolution_clock::now();
         if (!path.empty()) {

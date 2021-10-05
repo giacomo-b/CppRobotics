@@ -56,9 +56,12 @@ namespace Robotics::Model {
         {
         }
 
-        /** @copydoc SystemBase::PropagateDynamics(const Input&)
+        /** @copydoc SystemBase::PropagateDynamics(const Input&, double dt)
          */
-        void PropagateDynamics(const Input& u) { this->x = this->A * this->x + this->B * u; }
+        void PropagateDynamics(const Input& u, double)
+        {
+            this->x = this->A * this->x + this->B * u;
+        }
     };
 
 }  // namespace Robotics::Model

@@ -24,13 +24,7 @@ namespace Robotics::ClassicalControl {
          * @param target target value
          * @return the computed control action
          */
-        double ComputeControlAction(double current, double target);
-
-        /**
-         * @brief Sets the time step used to propagate the dynamics
-         * @param step desired time step
-         */
-        void SetTimeStep(double step) { dt = step; }
+        double ComputeControlAction(double current, double target, double dt);
 
         /**
          * @brief Sets a lower and upper bound for the control action
@@ -46,7 +40,6 @@ namespace Robotics::ClassicalControl {
 
       private:
         double Kp, Ki, Kd;
-        double dt{0.1};
         bool is_limited{false};
         double integral{0};
         double err_old{0};
@@ -54,7 +47,7 @@ namespace Robotics::ClassicalControl {
         double u_max;
     };
 
-    double PID::ComputeControlAction(double current, double target)
+    double PID::ComputeControlAction(double current, double target, double dt)
     {
         double err = target - current;
 
