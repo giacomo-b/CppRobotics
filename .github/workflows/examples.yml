@@ -1,4 +1,4 @@
-name: Example
+name: Examples
 
 on:
   push:
@@ -24,10 +24,13 @@ jobs:
           key: ${{ github.workflow }}-cpm-modules-${{ hashFiles('**/CMakeLists.txt', '**/*.cmake') }}
 
       - name: configure
-        run: cmake -Sexamples/infinite_horizon_lqr -Bbuild/infinite_horizon_lqr -DCMAKE_BUILD_TYPE=Debug
+        run: cmake -Sall -Bbuild -DCMAKE_BUILD_TYPE=Debug
 
       - name: build
-        run: cmake --build build/infinite_horizon_lqr -j4
+        run: cmake --build build -j4
 
       - name: run
-        run: ./build/infinite_horizon_lqr/main
+        run: ./build/ekf/main
+        run: ./build/lqr/main
+        run: ./build/lqr_plot/main
+        run: ./build/pid/main
