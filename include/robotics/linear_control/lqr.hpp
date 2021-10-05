@@ -14,6 +14,9 @@ namespace Robotics::LinearControl {
      */
     template <int StateSize, int InputSize>
     class LQR {
+        static_assert(StateSize > 0);
+        static_assert(InputSize > 0);
+
         using VectorNx1 = ColumnVector<StateSize>;
         using VectorMx1 = ColumnVector<InputSize>;
 
