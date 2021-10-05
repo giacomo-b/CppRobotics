@@ -1,10 +1,9 @@
 #pragma once
 
-#include <robotics/common.h>
-#include <robotics/system/nonlinear-system.h>
-
 #include <Eigen/Dense>
 #include <cmath>
+#include <robotics/common.hpp>
+#include <robotics/system/nonlinear-system.hpp>
 #include <vector>
 
 namespace Robotics::Estimation {

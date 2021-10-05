@@ -1,10 +1,9 @@
 #pragma once
 
-#include <robotics/common.h>
-
 #include <Eigen/Dense>
 #include <cmath>
 #include <iostream>
+#include <robotics/common.hpp>
 #include <vector>
 
 namespace Robotics::LinearControl {

@@ -1,11 +1,11 @@
 #include <matplot/matplot.h>
-#include <robotics/robotics.h>
 
 #include <chrono>
 #include <iomanip>
 #include <iostream>
+#include <robotics/robotics.hpp>
 
-#include "dynamics.h"
+#include "dynamics.hpp"
 
 Input sample_input();
 

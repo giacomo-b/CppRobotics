@@ -1,9 +1,8 @@
 #pragma once
 
-#include <robotics/system/system-base.h>
-
 #include <cmath>
 #include <functional>
+#include <robotics/system/system-base.hpp>
 
 namespace Robotics::Model {
 

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <robotics/common.h>
-
 #include <Eigen/Dense>
+#include <robotics/common.hpp>
 
 namespace Robotics::Model {
 

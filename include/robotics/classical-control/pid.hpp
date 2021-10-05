@@ -1,9 +1,8 @@
 #pragma once
 
-#include <robotics/common.h>
-
 #include <algorithm>
 #include <cmath>
+#include <robotics/common.hpp>
 
 namespace Robotics::ClassicalControl {
     /**

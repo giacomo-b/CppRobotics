@@ -1,6 +1,6 @@
 #pragma once
 
-#include <robotics/system/system-base.h>
+#include <robotics/system/system-base.hpp>
 
 namespace Robotics::Model {
 

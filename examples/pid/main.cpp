@@ -1,9 +1,8 @@
-#include <robotics/robotics.h>
-
 #include <chrono>
 #include <iomanip>
 #include <iostream>
 #include <random>
+#include <robotics/robotics.hpp>
 
 int main()
 {
