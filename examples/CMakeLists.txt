@@ -1,5 +1,0 @@
-add_subdirectory(cubic_spline_interpolation)
-add_subdirectory(extended-kalman-filter)
-add_subdirectory(infinite_horizon_lqr)
-add_subdirectory(infinite_horizon_lqr_plot)
-add_subdirectory(pid)
