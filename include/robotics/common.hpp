@@ -16,9 +16,30 @@ namespace Robotics {
     template <int N, int M>
     using Matrix = Eigen::Matrix<double, N, M>;
 
-    double deg2rad(double deg)
+    inline double deg2rad(double deg)
     {
         return deg * 3.14 / 180.0;  // TODO: replace 3.14 with M_PI (cross-platform)
+    }
+
+    /**
+     * @brief return evenly spaced numbers over a specified N interval.
+     * @param start The starting value of the sequence
+     * @param stop The end value of the sequence
+     * @param N number of sample to generate.
+     */
+    template <typename T>
+    inline constexpr std::vector<T> linspace(T start, T stop, std::size_t N)
+    {
+        assert(N > 1);
+        std::vector<T> vec(N, 0);
+
+        T val{start};
+        T increment{(stop - start) / static_cast<T>(N - 1)};
+        for (auto it = vec.begin(); it != vec.end(); ++it) {
+            *it = val;
+            val += increment;
+        }
+        return vec;
     }
 
     class NormalDistributionRandomGenerator {
