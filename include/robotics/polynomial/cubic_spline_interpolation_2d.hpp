@@ -1,7 +1,7 @@
 #ifndef CUBIC_SPLINE_INTERPOLATION_2D_H
 #define CUBIC_SPLINE_INTERPOLATION_2D_H
 
-#include "cubic_spline_interpolation.h"
+#include "cubic_spline_interpolation.hpp"
 
 namespace Robotics::Polynomial {
     class CubicSpline2D {

@@ -22,13 +22,13 @@ OutputMatrix C(State state, const Input& control, double dt);
 StateMatrix state_jacobian(const State& state, const Input& control, double dt);
 OutputMatrix output_jacobian(const State& state, const Input& control, double dt);
 
-StateMatrix A(const State& state, const Input& control, double dt)
+StateMatrix A(const State&, const Input&, double)
 {
     StateMatrix A = Robotics::ColumnVector<N>(1.0, 1.0, 1.0, 0.0).asDiagonal();
     return A;
 }
 
-InputMatrix B(State state, const Input& control, double dt)
+InputMatrix B(State state, const Input&, double dt)
 {
     InputMatrix B;
 
@@ -42,7 +42,7 @@ InputMatrix B(State state, const Input& control, double dt)
     return B;
 }
 
-OutputMatrix C(State state, const Input& control, double dt)
+OutputMatrix C(State, const Input&, double)
 {
     OutputMatrix H;
     // clang-format off
@@ -84,7 +84,7 @@ StateMatrix state_jacobian(const State& state, const Input& control, double dt)
     return JF;
 }
 
-OutputMatrix output_jacobian(const State& state, const Input& control, double dt)
+OutputMatrix output_jacobian(const State&, const Input&, double)
 {
     OutputMatrix JH;
     // clang-format off

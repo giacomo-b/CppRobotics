@@ -21,7 +21,7 @@ CPMAddPackage(NAME Robotics SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/../..)
 # ---- Create standalone executable ----
 
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
-     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+     ${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
 )
 
 add_executable(EKF ${sources})

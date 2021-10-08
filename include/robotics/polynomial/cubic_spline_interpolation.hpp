@@ -1,7 +1,7 @@
 #ifndef CUBIC_SPLINE_INTERPOLATION_H
 #define CUBIC_SPLINE_INTERPOLATION_H
 
-#include <robotics/common.h>
+#include <robotics/common.hpp>
 
 namespace Robotics::Polynomial {
     struct SplineSet {

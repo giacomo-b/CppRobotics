@@ -112,7 +112,7 @@ where `CONFIG_TYPE` is either `Debug` or `Release`, depending on how you configu
 #### Importing the library
 
 ```cpp
-#include <robotics/robotics.h>
+#include <robotics/robotics.hpp>
 ```
 
 #### System definition

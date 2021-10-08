@@ -1,10 +1,9 @@
 #pragma once
 
-#include <robotics/common.h>
-
 #include <Eigen/Dense>
 #include <cmath>
 #include <iostream>
+#include <robotics/common.hpp>
 #include <vector>
 
 namespace Robotics::LinearControl {
@@ -13,15 +12,18 @@ namespace Robotics::LinearControl {
      * @brief A class for implementing a Linear-Quadratic Regulator
      * @todo: Refactor class to conform to the other controllers
      */
-    template <int N, int M>
+    template <int StateSize, int InputSize>
     class LQR {
-        using VectorNx1 = ColumnVector<N>;
-        using VectorMx1 = ColumnVector<M>;
+        static_assert(StateSize > 0);
+        static_assert(InputSize > 0);
 
-        using MatrixNxN = SquareMatrix<N>;
-        using MatrixMxM = SquareMatrix<M>;
-        using InputMatrix = Matrix<N, M>;
-        using GainMatrix = Matrix<M, N>;
+        using VectorNx1 = ColumnVector<StateSize>;
+        using VectorMx1 = ColumnVector<InputSize>;
+
+        using MatrixNxN = SquareMatrix<StateSize>;
+        using MatrixMxM = SquareMatrix<InputSize>;
+        using InputMatrix = Matrix<StateSize, InputSize>;
+        using GainMatrix = Matrix<InputSize, StateSize>;
 
         using State = VectorNx1;
 
@@ -47,7 +49,7 @@ namespace Robotics::LinearControl {
          * @todo this behavior should be in a user-defined loop, refactor so that only one step is
          * carried out at a time
          */
-        std::vector<State> Solve(State initial, State target)
+        std::vector<State> Solve(State initial, State target, double dt)
         {
             std::vector<State> path{initial};
             path.reserve((unsigned int)std::round(max_time / dt)
@@ -90,12 +92,6 @@ namespace Robotics::LinearControl {
         void SetTimeLimit(double limit) { max_time = limit; }
 
         /**
-         * @brief Sets the simulation time step
-         * @param step time step
-         */
-        void SetTimeStep(double step) { dt = step; }
-
-        /**
          * @brief Sets the tolerance w.r.t. the target
          * @param tol tolerance
          * @todo remove, the user should decide when to exit
@@ -136,7 +132,6 @@ namespace Robotics::LinearControl {
         {
             MatrixNxN X = Q, Xn = Q;
             for (auto _ = 0; _ < max_iter; _++) {
-                std::cout << _ << std::endl;
                 Xn = A.transpose() * X * A
                      - A.transpose() * X * B * (R + B.transpose() * X * B).inverse() * B.transpose()
                            * X * A
@@ -154,7 +149,6 @@ namespace Robotics::LinearControl {
         GainMatrix K;
 
         double max_time{100.0};
-        double dt{0.1};
         double goal_dist{0.1};
         int max_iter{10};
         double eps{0.01};

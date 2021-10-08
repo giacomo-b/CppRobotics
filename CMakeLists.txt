@@ -47,13 +47,11 @@ endif()
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
-file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 
 # ---- Create library ----
 
 add_library(Robotics INTERFACE)
-
-set_target_properties(Robotics PROPERTIES CXX_STANDARD 17)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
 target_compile_options(Robotics INTERFACE "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")

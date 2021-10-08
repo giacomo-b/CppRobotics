@@ -1,5 +1,5 @@
 #include <matplot/matplot.h>
-#include <robotics/robotics.h>
+#include <robotics/robotics.hpp>
 
 int main()
 {

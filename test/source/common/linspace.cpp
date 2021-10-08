@@ -1,5 +1,5 @@
 #include <doctest/doctest.h>
-#include <robotics/common.h>
+#include <robotics/common.hpp>
 
 using namespace Robotics;
 
